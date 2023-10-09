@@ -99,7 +99,7 @@
           <label for="service_charges" class="flex items-center space-x-1.5 mb-1 ">
             <span class="text-grey-500 text-sm leading-[160%]">Service charges</span>
 
-            <IconInfo :height="18" :width="18" class="text-grey-300"/>
+            <IconInfo :height="18" :width="18" class="text-grey-200"/>
           </label>
 
           <div class="flex space-x-2 items-center bg-input-bg w-full rounded  px-3">
