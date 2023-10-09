@@ -129,7 +129,7 @@
             modeTransport: "test transport",
             quality: "quality",
             loadingTerminal: "load terminal",
-            procedure: "Lorem ipsum dolor sit amet consectetur. Pharetra in tempor vel congue maecenas ultrices at a. Imperdiet mattis porttitor pulvinar lobortis. Lorem pellentesque nibh velit enim neque ut elit tincidunt rhoncus. Risus mattis hendrerit elementum cursus ullamcorper tempor.",
+            procedure: "Lorem ipsum dolor sit amet consectetur. Pharetra in tempor vel c  ongue maecenas ultrices at a. Imperdiet mattis porttitor pulvinar lobortis. Lorem pellentesque nibh velit enim neque ut elit tincidunt rhoncus. Risus mattis hendrerit elementum cursus ullamcorper tempor.",
             imoNumber: "55467896", 
         }
     }

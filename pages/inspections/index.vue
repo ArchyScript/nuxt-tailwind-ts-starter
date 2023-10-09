@@ -30,8 +30,8 @@
     <div v-if="loading"></div>
 
     <div v-else>
-      <section class="grid w-full grid-cols-2 gap-y-8 gap-x-5" v-if="myDeals.length">
-        <CardDeal v-for="deal in myDeals" :key="deal.id" :data="deal" />
+      <section class="grid w-full grid-cols-2 gap-y-8 gap-x-5" v-if="inspections.length >= 1">
+        <CardDeal v-for="inspection in inspections" :key="inspection.id" :data="inspection" />
       </section>
 
       <div v-else class="col-span-2 flex items-center justify-center">
@@ -53,28 +53,36 @@
   const { getRequests } = useRequestsApi();
 
   const searchText = ref('');
-  const myDeals = ref([]);
+  const inspections = ref([
+        {
+          id: 'ertghfg',
+          imageUrl: '',
+          title: 'test ne',
+          seller: 'script',
+          requestAmount: 0,
+          interestRate: 0,
+          deliveryDays: '43', 
+       }, 
+        {
+          id: 'ertsdsdghfg',
+          imageUrl: '',
+          title: 'test ne',
+          seller: 'scrireerpt',
+          requestAmount: 0,
+          interestRate: 0,
+          deliveryDays: '43', 
+       }, 
+        {
+          id: '3434343',
+          imageUrl: '',
+          title: 'test ne',
+          seller: 'script',
+          requestAmount: 0,
+          interestRate: 0,
+          deliveryDays: '43', 
+       }, 
+  ]);
   const loading: Ref<boolean> = ref(false);
+ 
 
-  const filterDeals = () => {
-    console.log("filter func")
-  };
-
-  const getDeals = async () => {
-    loading.value = true;
-    $loading().start();
-    const response = await getRequests();
-    const { data, error } = response;
-    loading.value = false;
-    $loading().stop();
-
-    if (error) return $toast('show', { type: 'error', message: error?.message });
-
-    $toast('show', { type: 'success', message: data.message || 'Deals retrieved successfully' });
-
-    myDeals.value = data.fund_requests;
-  };
-
-  //
-  onBeforeMount(() => getDeals());
 </script>

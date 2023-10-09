@@ -1,10 +1,5 @@
 <template>
-  <div>
-    <!-- fund request -->
-    <Modal v-if="activeModal == 'fund-offer'" size="sm" @close="closeModals">
-      <ModalsInspectionsFundOffer @done="fetchDashboardData" />
-    </Modal>
-
+  <div> 
     <div class="space-y-6"> 
       <section class="flex justify-between items-center">
         <h4 class="flex-1 text-[1.125rem] font-semibold font-Poppins text-grey-500">

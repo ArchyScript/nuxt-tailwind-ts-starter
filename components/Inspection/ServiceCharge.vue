@@ -4,14 +4,16 @@
         <div class="flex items-center justify-between space-x-2">
             <h4 class="text-lg text-grey-500 font-medium leading-[160%]">Service charge</h4>
 
-            <span> paid </span>
+            <span
+                class="text-secondary-500 text-sm leading-5 bg-secondary-50 px-1.5 flex rounded-xl !w-fit h-fit py-0.5"
+            > paid </span>
         </div>
 
         <CardContainer size="xs" customClass="!bg-ui-bg space-y-2">
             <div class="space-y-0.5">
                 <h6 class="!text-grey-200 !leading-[160%] text-sm">Type</h6>
                 <h4 class="text-lg text-grey-500 leading-[160%]">
-                    {{ serviceCharge.details?.document_type }}
+                    {{ serviceCharge.document_type }}
                 </h4>
             </div>
 
@@ -53,7 +55,7 @@
                 <h6 class="!text-grey-200 !leading-[160%] text-sm">Address</h6>
                 <div class="flex justify-between items-center truncate space-x-2">
                     <h4 class="text-lg text-grey-500 truncate leading-[160%]">
-                        0x32gBe4125456412545678fgtjgbmj78fgtjgbm6412545678fgtjgbmjj015575x
+                        {{serviceCharge.wallet_address}}
                     </h4>
 
                     <span
@@ -74,17 +76,17 @@
     serviceCharge: {
         type: Object,
         default: {
-            companyLogo: "Test",
-            companyLogo: "Test",
-            companyLogo: "Test",
-            companyLogo: "Test",
-            companyLogo: "Test",
-            companyLogo: "Test", 
+            document_type: "Test",
+            amount: "568790",
+            method: "fiat",
+            bank_account: {
+                account_name: "Script",
+                account_number: "32456709",
+                bank_name: "UBA",
+                swift_code: "243567",
+            },
+            wallet_address: " 0x32gBe4125456412545678fgtjgbmj78fgtjgbm6412545678fgtjgbmjj015575x",  
         }
     }
-  }) 
-
-  const myDeal: any = ref({});   
-  const dealStatus = computed(() => myDeal.value.status);
-   
+  })  
 </script>

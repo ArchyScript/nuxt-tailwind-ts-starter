@@ -13,16 +13,16 @@
 
         <div class="flex-1 truncate space-y-1.5">
             <div class="flex items-center space-x-2">
-            <h class="font-medium text-grey-500 truncate pr-2">
-                {{ sellerDetails?.company }}
-            </h>
-            <IconCheckbox type="square" :width="20" :height="20" class="text-success-500" />
+                <h5 class="font-medium text-grey-500 truncate pr-2">
+                    {{ sellerDetails?.company }}
+                </h5>
+                <IconCheckbox type="square" :width="20" :height="20" class="text-success-500" />
             </div>
 
             <span
-            class="text-sm text-error-500 bg-error-50 px-1.5 leading-5 flex rounded-xl !w-fit h-fit py-0.5"
+                class="text-sm text-error-500 bg-error-50 px-1.5 leading-5 flex rounded-xl !w-fit h-fit py-0.5"
             >
-            Seller
+                Seller
             </span>
         </div>
         </div>

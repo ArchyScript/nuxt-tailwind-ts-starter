@@ -5,7 +5,7 @@ import { default } from '../Icon/Filter.vue';
 
     <div v-if="!hasBtn" class="space-y-2">
       <h6
-        class="font-semibold text-xl leading-5 cursor-pointer text-center text-grey-300"
+        class="font-medium text-sm leading-5 cursor-pointer text-center text-grey-300"
         :class="class"
       >
         {{ title }}

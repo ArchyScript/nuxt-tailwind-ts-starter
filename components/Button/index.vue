@@ -18,6 +18,7 @@
         <IconEmail v-if="iconName == 'email'" />
         <IconDownload v-if="iconName == 'download'" />
         <IconExport v-if="iconName == 'export'" />
+        <IconUpload uploadType="paper" v-if="iconName == 'paper-upload'" />
       </span>
 
       <span class="select-none" :class="`text-${textSize} `">

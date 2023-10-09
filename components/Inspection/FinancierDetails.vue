@@ -1,6 +1,10 @@
 <template>  
     <CardContainer size="md" class="flex-col space-y-4">
-        <h4 class="text-lg text-grey-500 font-medium leading-[160%]">Financier details</h4>
+        <div class="flex justify-between items-center"> 
+            <h4 class="text-lg text-grey-500 font-medium leading-[160%]">Financier details</h4>
+
+            <IconInfo class="text-grey-300"/>
+        </div>
 
         <div class="flex-1 flex space-x-2 items-center">
         <span class="h-12 w-12 rounded-full ring-2 ring-primary-500">
@@ -11,18 +15,15 @@
             />
         </span>
 
-        <div class="flex-1 truncate space-y-1.5">
-            <div class="flex items-center space-x-2">
-            <h class="font-medium text-grey-500 truncate pr-2">
+        <div class="flex-1 truncate space-y-1.5"> 
+            <h5 class="font-medium text-grey-500 truncate pr-2">
                 {{ financierDetails?.company }}
-            </h>
-            <IconCheckbox type="square" :width="20" :height="20" class="text-success-500" />
-            </div>
+            </h5> 
 
             <span
-            class="text-sm text-error-500 bg-error-50 px-1.5 leading-5 flex rounded-xl !w-fit h-fit py-0.5"
+                class="text-sm text-error-500 bg-error-50 px-1.5 leading-5 flex rounded-xl !w-fit h-fit py-0.5"
             >
-            Seller
+                Seller
             </span>
         </div>
         </div>
