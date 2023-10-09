@@ -5,8 +5,7 @@ export const setResponseReturn = (data: any, status: any, error: any) => {
   return { data, status, error };
 };
 
-export const HandleAxiosError = (error: AxiosError | any) => {
-  // pinia store will be available before any api request is made so no error
+export const HandleAxiosError = (error: AxiosError | any) => { 
   const { logout } = useAuthStore();
 
   const error_response = error.response;
@@ -15,9 +14,7 @@ export const HandleAxiosError = (error: AxiosError | any) => {
   if (error_response) {
     const errorIsArray = Array.isArray(error_response);
     const error_message = errorIsArray ? error_response[0] : error_response;
-
-    // logout if error is an unauthorized error
-    // don't return from here so that {data, status and error} will be reurned as an object
+ 
     if ((status && status == 401) || status == 403) {
       setTimeout(() => {
         logout();

@@ -67,9 +67,8 @@
     else props.size;
   });
 
-  const close = () => {
-    emit('close', props.id);
-  };
+  const close = () => emit('close', props.id);
+  
   window.addEventListener('keyup', (e) => {
     if (e.key == 'Escape') return close();
   });

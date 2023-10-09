@@ -1,106 +1,146 @@
 <template>
-    <div class="space-y-8">  
-        <h4 class="text-center text-grey-500 text-xl font-medium leading-6">
-        Account Details
-        </h4>
+  <div class="space-y-8">  
+    <h4 class="text-center text-grey-500 text-xl font-medium  leading-[160%]">
+      Account Details
+    </h4>
 
-        <form class="mt-8 space-y-4">
-          <div class=" flex items-center space-x-4">
-             <div class="flex-1">
-                <label for="accountNumber" class="block mb-1 text-sm leading-6 text-grey-500">
-                    Account number
-                </label>
+    <form class="space-y-4">
+      <div class=" flex items-center space-x-4">
+        <div class="flex-1">
+          <label for="company_account_number" class="block mb-1 text-sm  leading-[160%] text-grey-500">
+            Company account number
+          </label>
 
-                <div class="relative bg-input-bg w-full rounded">
-                    <input
-                        id="accountNumber"
-                        type="text"
-                        class="input-field px-3"
-                        placeholder="enter account number"
-                        v-model.trim="kycPayload.first_name"
-                    />
-                </div>
-            </div>
-            
-            <div class="flex-1">
-                <label for="accountNumber" class="block mb-1 text-sm leading-6 text-grey-500">
-                    Account number
-                </label>
-
-                <div class="relative bg-input-bg w-full rounded">
-                    <input
-                    id="accountNumber"
-                    type="text"
-                    class="input-field px-3"
-                    placeholder="enter account number"
-                        v-model.trim="kycPayload.first_name"
-                    />
-                </div>
-            </div> 
-          </div> 
-
-          <div class=" flex items-center space-x-4">
-            <div class="flex-1">
-              <label for="firstname" class="block mb-2 leading-6 text-grey-500">First Name</label>
-
-              <div class="relative bg-input-bg w-full rounded">
-                <span class="icon icon-left text-grey-300">
-                  <IconUser />
-                </span>
-
-                <input
-                  id="firstname"
-                  type="text"
-                  class="input-field !pl-12 pr-4"
-                  placeholder="enter first name"
-                  v-model.trim="kycPayload.first_name"
-                />
-              </div>
-            </div>
-
-            <div class="flex-1">
-              <label for="lastname" class="block mb-2 leading-6 text-grey-500">Last Name</label>
-
-              <div class="relative bg-input-bg w-full rounded">
-                <span class="icon icon-left text-grey-300">
-                  <IconUser />
-                </span>
-
-                <input
-                  id="lastname"
-                  type="text"
-                  class="input-field !pl-12 pr-4"
-                  placeholder="enter first name"
-                  v-model.trim="kycPayload.last_name"
-                />
-              </div>
-            </div>
-          </div> 
-        </form>
-
-        
-        <div class="flex justify-between items-center space-x-4 mt-8" >
-          <Button
-            text="Back"
-            class="!w-auto !px-8"
-            :hasBorder="true"
-            @click="goBack"
-          />
-
-          <Button
-            text="Submit KYC"
-            class="!w-auto !px-8 flex-end !text-white"
-            @click="submitKYC"
-          />
+          <div class="relative bg-input-bg w-full rounded">
+            <input
+              id="company_account_number"
+              type="text"
+              class="input-field px-3"
+              placeholder="enter account number"
+              v-model.trim="kycPayload.company_account_number"
+            />
+          </div>
         </div>
+        
+        <div class="flex-1">
+          <label for="bank" class="block mb-1 text-sm  leading-[160%] text-grey-500">
+            Bank
+          </label> 
+
+          <div class="relative bg-input-bg w-full rounded">
+            <input
+              id="bank"
+              type="text"
+              class="input-field px-3"
+              placeholder="enter preferred bank"
+              v-model.trim="kycPayload.bank"
+            />
+          </div>
+           
+          <!-- <div class="relative bg-input-bg w-full rounded">
+            <el-select
+              v-model="payload.fiat.bankAccountId"
+              class="p-1 !bg-white !border !border-grey-50 rounded-md !focus:text-black !w-full"
+              placeholder="Select bank account"
+              size="large"
+              remote
+              filterable
+              remote-show-suffix
+              default-first-option
+              :loading="isFilteringBankAccounts"
+              :remote-method="handleBankAccountSearch"
+              loading-text="Loading bank accounts"
+              no-match-text="No bank matched... check spelling"
+              no-data-text="No match"
+            >
+              <el-option
+                v-for="bankAccount in bankAccounts"
+                :key="bankAccount.accountId"
+                :label="`${bankAccount?.account_name} - ${bankAccount?.account_number} (${bankAccount?.bank_name})`"
+                :value="bankAccount.accountId"
+                @click="handleBankSelect(bankAccount)"
+              >
+                <div
+                  class="flex items-center space-x-2 truncate"
+                  :title="`${bankAccount?.account_name} - ${bankAccount?.account_number} (${bankAccount?.bank_name})`"
+                >
+                  <h6 class="text-sm text-grey-500 font-medium uppercase truncate">
+                    {{ bankAccount?.account_name }} -
+                  </h6>
+
+                  <p class="text-sm text-grey-500 leading-[160%] truncate">
+                    {{ bankAccount?.account_number }} ( {{ bankAccount?.bank_name }} )
+                  </p>
+                </div>
+              </el-option>
+            </el-select>
+          </div> -->
+        </div> 
+      </div>  
+      
+      <div class=" flex items-center space-x-4">
+        <div class="flex-1">
+          <label for="account_name" class="block mb-1 text-sm  leading-[160%] text-grey-500">
+            Account name
+          </label>
+
+          <div class="relative bg-input-bg w-full rounded">
+            <input
+              id="account_name"
+              type="text"
+              class="input-field px-3"
+              placeholder="enter account name"
+              v-model.trim="kycPayload.account_name"
+            />
+          </div>
+        </div>
+        
+        <div class="flex-1">
+          <label for="service_charges" class="flex items-center space-x-1.5 mb-1 ">
+            <span class="text-grey-500 text-sm leading-[160%]">Service charges</span>
+
+            <IconInfo :height="18" :width="18" class="text-grey-300"/>
+          </label>
+
+          <div class="flex space-x-2 items-center bg-input-bg w-full rounded  px-3">
+            <span class="flex text-sm font-semibold text-grey-300 leading-[160%]">$</span>
+
+            <input
+              id="service_charges"
+              type="text"
+              class="input-field"
+              placeholder="enter service charge"
+              v-model.trim="kycPayload.service_charges"
+            />
+          </div>
+        </div>
+      </div>  
+    </form>
+
+    
+    <div class="flex justify-between items-center space-x-4" >
+      <Button
+        text="Back"
+        class="!w-auto !px-8"
+        :disabled="isVerifyingKYC"
+        :hasBorder="true"
+        @click="goBack"
+      />
+
+      <Button
+        text="Submit KYC"
+        :loading="isVerifyingKYC"
+        class="!w-auto !px-8 flex-end !text-white"
+        @click="submitKYC"
+      />
     </div>
+  </div>
 </template>
 
 
 <script setup lang="ts">
-  definePageMeta({ layout: 'auth' });
+  definePageMeta({ layout: 'auth' }) 
 
-  import { required, email, minLength, maxLength, helpers } from '@vuelidate/validators';
   import { useVuelidate } from '@vuelidate/core'; 
   import { useAuthStore } from '~/store/authentication';
 
@@ -117,11 +157,10 @@
   const isVerifyingKYC: Ref<boolean> = ref(false); 
 
   const kycPayload: Ref<any> = ref({
-    first_name: '',
-    last_name: '',
-    address: '',
-    nationality: '',
-    email: '', 
+    company_account_number: '',
+    bank: '',
+    account_name: '',
+    service_charges: '', 
   });
 
   // computed
@@ -137,6 +176,7 @@
     const submitKYC = () => {
         console.log('submit kyc')
     } 
+
   const retoreSession = async () => {
     const kycInStorage = localStorage.getItem('kycData');
     if (!kycInStorage) return  $toast('show', { type: 'success', message: "KYC data retrieved" }); 

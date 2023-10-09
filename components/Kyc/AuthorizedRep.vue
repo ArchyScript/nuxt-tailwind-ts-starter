@@ -1,11 +1,24 @@
 <template>
+  <div class="">  
+    <div>  
+      <Modal
+        v-if="activeModal == 'liveness-verification'"
+        id="liveness-verification"
+        size="md"
+        @close="closeModal"
+      >
+        <LivenessCheck @done="getSelfie" @close="closeModal" />
+      </Modal>
+    </div>
+      
+    <!--  -->
     <div class="space-y-8">           
         <h4 class="text-center text-grey-500 text-xl font-medium leading-6">
-     Authorized representative / signatories details
+          Authorized representative / signatories details
         </h4> 
 
-        <form class="mt-8">
-          <div class="mb-4 flex items-center space-x-4">
+        <form class="space-y-4">
+          <div class=" flex items-center space-x-4">
             <div class="flex-1">
               <label for="firstname" class="block mb-2 leading-6 text-grey-500">First Name</label>
 
@@ -43,7 +56,7 @@
             </div>
           </div>
 
-          <div class="mb-4">
+          <div >
             <label for="address" class="block mb-2 leading-6 text-grey-500">Address</label>
 
             <div class="relative bg-input-bg rounded">
@@ -61,7 +74,7 @@
             </div>
           </div>
 
-          <div class="mb-4 flex items-center space-x-4">
+          <div class=" flex items-center space-x-4">
             <div class="flex-1">
               <label for="nationality" class="block mb-2 leading-6 text-grey-500">
                 Nationality {{ nationalityISO2 }}
@@ -128,125 +141,40 @@
                 </template>
               </el-input>
             </div>
-          </div>
+          </div> 
+           
+ 
+          <div class="w-1/2">
+            <label class="block mb-2 leading-6 text-grey-500">Email Address</label>
 
-          <div class="mb-4 flex items-center space-x-4">
-            <div class="flex-1">
-              <label for="min_amount" class="block mb-2 leading-6 text-grey-500">
-                Minimum Amount
-              </label>
+            <div class="relative bg-input-bg rounded">
+              <span class="icon icon-left text-grey-200">
+                <IconEmail />
+              </span>
 
-              <div class="relative bg-input-bg w-full rounded">
-                <input
-                  id="min_amount"
-                  type="text"
-                  class="input-field !pl-4 pr-4"
-                  placeholder="enter minimum amount"
-                  v-model="kycPayload.min_amount"
-                />
-              </div>
-            </div>
+              <input
+                id="email"
+                class="input-field !px-12"
+                type="email"
+                readonly
+                placeholder="example@gmail.com"
+                :value="kycPayload.email"
+                :class="{
+                  error: v$.email.$error || v$.email.$dirty,
+                  success: !v$.email.$dirty,
+                }"
+              />
+              <span
+                class="icon icon-right"
+                v-if="!v$.email.$dirty"
+                :class="!v$.email.$dirty && 'text-success-500'"
+              >
+                <IconCheckbox type="square" />
+              </span> 
+            </div> 
+          </div>  
 
-            <div class="flex-1">
-              <label for="max_amount" class="block mb-2 leading-6 text-grey-500">
-                Maximum Amount
-              </label>
-
-              <div class="relative bg-input-bg w-full rounded">
-                <input
-                  id="max_amount"
-                  type="text"
-                  class="input-field !pl-4 pr-4"
-                  placeholder="enter maximum amount"
-                  v-model="kycPayload.max_amount"
-                />
-              </div>
-            </div>
-          </div>
-
-          <div class="mb-4 flex items-center space-x-4">
-            <div class="flex-1">
-              <label for="payback_days" class="block mb-2 leading-6 text-grey-500">
-                Payback Days
-              </label>
-
-              <div class="relative bg-input-bg w-full rounded">
-                <input
-                  id="payback_days"
-                  type="text"
-                  class="input-field !pl-4 pr-4"
-                  placeholder="enter payback days"
-                  v-model="kycPayload.payback_days"
-                />
-              </div>
-            </div>
-
-            <div class="flex-1">
-              <label for="interest_rate" class="block mb-2 leading-6 text-grey-500">
-                Interest Rate
-              </label>
-
-              <div class="relative bg-input-bg w-full rounded">
-                <input
-                  id="interest_rate"
-                  type="text"
-                  class="input-field !pl-4 pr-4"
-                  placeholder="enter payback days"
-                  v-model="kycPayload.interest_rate"
-                />
-              </div>
-            </div>
-          </div>
-
-          <div class="mb-4 flex items-center space-x-4">
-            <div class="w-1/2">
-              <label class="block mb-2 leading-6 text-grey-500">Email Address</label>
-
-              <div class="relative bg-input-bg rounded">
-                <span class="icon icon-left text-grey-200">
-                  <IconEmail />
-                </span>
-
-                <input
-                  id="email"
-                  class="input-field !px-12"
-                  type="email"
-                  readonly
-                  placeholder="example@gmail.com"
-                  :value="kycPayload.email"
-                  :class="{
-                    error: vRep$.email.$error || vRep$.email.$dirty,
-                    success: !vRep$.email.$dirty,
-                  }"
-                />
-                <span
-                  class="icon icon-right"
-                  v-if="!vRep$.email.$dirty"
-                  :class="!vRep$.email.$dirty && 'text-success-500'"
-                >
-                  <IconCheckbox type="square" />
-                </span> 
-              </div> 
-            </div>
-
-            <div class="flex-1">
-              <label for="passport_number" class="block mb-2 leading-6 text-grey-500">
-                Passport Number
-              </label>
-
-              <div class="relative bg-input-bg w-full rounded">
-                <input
-                  id="passport_number"
-                  type="text"
-                  class="input-field !pl-4 pr-4"
-                  placeholder="enter passport number"
-                  v-model="kycPayload.passport_number"
-                />
-              </div>
-            </div>
-          </div>
-
-          <div class="mb-4">
+          <div >
             <label class="block mb-2 leading-6 text-grey-500">
               Does the authorized representative hold a power of attorney?
             </label>
@@ -259,7 +187,7 @@
             </div>
           </div>
 
-          <div class="mb-4">
+          <div >
             <label class="block mb-2 leading-6 text-grey-500">
               Is the authorized representative/signatory considered a politically exposed
               person(PEP)?
@@ -273,7 +201,7 @@
             </div>
           </div>
 
-          <div class="mb-4">
+          <div >
             <h4 class="block mb-2 leading-6 text-grey-500">
               Upload International passport of authorized representative
             </h4>
@@ -287,7 +215,7 @@
             </div>
           </div>
 
-          <div class="mb-4">
+          <div >
             <label class="block mb-2 leading-6 text-grey-500">
               Click on the button below to verify liveness
             </label>
@@ -309,7 +237,7 @@
         </form>
 
         <!--  -->
-        <div class="flex justify-end items-center space-x-4 mt-8"> 
+        <div class="flex justify-end items-center space-x-4"> 
           <Button
             text="Continue"
             class="!w-auto !px-8 flex-end"
@@ -317,6 +245,7 @@
           />
         </div>
     </div>
+  </div>
 </template>
 
 
@@ -345,16 +274,11 @@
     address: '',
     nationality: '',
     email: '',
-    phone_number: '',
-    min_amount: '',
-    max_amount: '',
+    phone_number: '', 
     power_of_attorney: '',
     pep: '',
     international_passport: '',
-    selfie: '',
-    payback_days: '',
-    interest_rate: 0,  
-    passport_number: '', 
+    selfie: '', 
   });
 
   // computed
@@ -367,7 +291,7 @@
   );  
 
   // rules
-  const authourizedRepRules = {
+  const rules = {
     first_name: { required },
     last_name: { required },
     address: { required },
@@ -380,7 +304,7 @@
   }; 
 
   //  validation
-  const vRep$ = useVuelidate(authourizedRepRules, kycPayload.value);
+  const v$ = useVuelidate(rules, kycPayload.value);
 
   // functions
   const closeModal = () => (activeModal.value = ''); 

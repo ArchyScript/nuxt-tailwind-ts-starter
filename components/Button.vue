@@ -102,7 +102,7 @@
     }
 
     &.disabled {
-      @apply bg-grey-50 text-grey-200 cursor-not-allowed;
+      @apply bg-grey-50   ring-0 text-grey-200 cursor-not-allowed;
     }
 
     &.loading {

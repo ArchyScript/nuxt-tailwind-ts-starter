@@ -1,6 +1,8 @@
 <template>
   <div>  
     <div class="space-y-6"> 
+      <Disclaimer @close="showDisclaimer = false" v-if="showDisclaimer"/>
+      
       <Back text="Inspection Agencies" routerLink="/inspections" />
  
       <div v-if="loading"></div>
@@ -102,6 +104,7 @@
   const route = useRoute(); 
 
   const loading: Ref<boolean> = ref(false);
+  const showDisclaimer: Ref<boolean> = ref(true);
   const activeModal = ref('');  
 
   const closeModals = () => activeModal.value = ''; 

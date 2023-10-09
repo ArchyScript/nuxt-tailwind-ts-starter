@@ -44,7 +44,7 @@
                 <ChartsLine :chartData="temperatureChartData" :chartOptions="chartOptions" />
               </div>
 
-              <GenericNoData v-else />
+              <NoData v-else />
             </div>
 
             <div class="flex justify-between items-center">
@@ -90,7 +90,7 @@
                 </div>
 
                 <div v-else class="flex items-center justify-center">
-                  <GenericNoData  title="No new request"/>
+                  <NoData  title="No new request"/>
                 </div>
               </div>
             </div>

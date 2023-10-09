@@ -95,7 +95,7 @@ export const useAuthApi = () => {
   };
 
   // delete financier
-  const deleteFinancier = async () => {
+  const deleteInspector = async () => {
     try {
       const response = await defaultAxiosInstance.post(`delete-account`);
       return HandleAxiosResponse(response);
@@ -125,6 +125,6 @@ export const useAuthApi = () => {
     requestPassword,
     verifyUser,
     logout,
-    deleteFinancier,
+    deleteInspector,
   };
 };

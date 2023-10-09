@@ -1,17 +1,6 @@
 <template>
   <div>
-    <div>
-      <!-- Full screen loader -->
-      <Modal
-        v-if="isUploading"
-        :loading="isUploading"
-        size="sm"
-        id="file-upload"
-        @close="closeModal"
-      >
-        <ModalsProcessing :loading="isUploading" message="Uploading file to server..." />
-      </Modal>
-
+    <div> 
       <!-- Modals here -->
       <Modal
         v-if="activeModal == 'kyc-verification'"
@@ -22,7 +11,7 @@
         <ModalsProcessing v-if="isVerifyingKYC" message="Verifying KYC..." />
 
         <template v-else>
-          <ModalsResponses
+          <ModalsResponse
             v-if="failedVerificationMessage"
             type="error"
             titleText="KYC Verification Failed"
@@ -32,27 +21,18 @@
             @close="closeModal"
           />
 
-          <ModalsResponses
+          <ModalsResponse
             v-else
             :message="successVerificationMessage"
             :hasTitle="false"
             @next="gotoDashboard"
           />
         </template>
-      </Modal>
-
-      <Modal
-        v-if="activeModal == 'liveness-verification'"
-        id="liveness-verification"
-        size="md"
-        @close="closeModal"
-      >
-        <KycLivenessCheck @done="getSelfie" @close="closeModal" />
-      </Modal>
+      </Modal> 
     </div>
 
     <div class="bg-white rounded box-shadow p-8 w-[49.375rem] mx-auto">
-      <div class="text-sm p-1">
+      <div class="text-sm p-1 space-y-8">
         <div class="flex-col space-y-8">
           <p class="text-center text-grey-400 leading-6">
             Hi, {{ kycPayload.email }}! Take some minutes to setup your account, kindly complete KYC
@@ -68,9 +48,9 @@
           </div> 
         </div>
  
-        <KycAuthorizedRep v-if="activeStep == 1" @done="activeStep = 2" />
-        <KycInspectionAgencies v-else-if="activeStep == 2"  @done="activeStep = 3" @back="activeStep = 1"/>
-        <KycAccountDetails v-else="activeStep == 3" /> 
+        <KycAuthorizedRep v-if="activeStep == 1" @done="activeStep++" />
+        <KycInspectionAgencies v-else-if="activeStep == 2"  @done="activeStep++" @back="activeStep--"/>
+        <KycAccountDetails v-else="activeStep == 3"  @back="activeStep--" /> 
       </div>
     </div>
   </div>

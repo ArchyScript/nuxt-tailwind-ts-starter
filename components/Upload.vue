@@ -51,7 +51,7 @@
   });
 
   import { beforeFileUpload } from '~/utils/upload';
-  import { IconLoader } from '../../.nuxt/components';
+  import { IconLoader } from '../.nuxt/components';
   const { uploadFile } = useCommonApi();
   const { $toast } = useNuxtApp();
 
@@ -69,7 +69,7 @@
 
     await upload(file);
   };
-  const upload = async (file: any) => {
+  const upload = async (file: any) => { 
     isUploading.value = true;
     // let formData = new FormData();
     // formData.append('doc', file);
@@ -78,6 +78,7 @@
     // const { data, error } = response;
 
     // isUploading.value = false;
+    // $loading().stop()
     // if (error) return $toast('show', { type: 'error', message: error.message });
 
     // fileUploaded(data.file_url);
@@ -85,7 +86,7 @@
     setTimeout(() => {
       fileUploaded(
         'https://res.cloudinary.com/vesseltrust/image/upload/v1692274839/pjdnkiqtqph9zlmy3jtw.png',
-      );
+      ); 
       isUploading.value = false;
     }, 500);
   };

@@ -1,8 +1,7 @@
 import { useCustomStore } from '~/store/custom';
 import { ToastObjectType } from '../types/custom';
 
-export default defineNuxtPlugin(() => {
-  console.log(546789);
+export default defineNuxtPlugin(() => { 
   const toast = (action: string, params: ToastObjectType) => {
     const { getToastObjectValues } = useCustomStore();
 
@@ -21,16 +20,12 @@ export default defineNuxtPlugin(() => {
 
   const loading = () => {
     const { startLoading, stopLoading } = useCustomStore();
-    const start = () => {
-      startLoading();
-    };
-    const testLog = (value: any) => console.log(value);
+    const start = () => startLoading();  
     const stop = () => stopLoading();
 
     return {
       start,
-      stop,
-      testLog,
+      stop, 
     };
   };
   //

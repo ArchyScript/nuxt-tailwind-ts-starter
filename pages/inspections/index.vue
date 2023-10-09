@@ -30,12 +30,12 @@
     <div v-if="loading"></div>
 
     <div v-else>
-      <section class="grid w-full grid-cols-2 gap-y-8 gap-x-5" v-if="inspections.length >= 1">
-        <CardDeal v-for="inspection in inspections" :key="inspection.id" :data="inspection" />
+      <section class="grid w-full grid-cols-2 gap-y-8 gap-x-5" v-if="inspections.length">
+        <CardInspection v-for="inspection in inspections" :key="inspection.id" :inspection="inspection" />
       </section>
 
       <div v-else class="col-span-2 flex items-center justify-center">
-        <GenericNoData
+        <NoData
           class="col-span-2"
           :hasBtn="true"
           btnText="View marketplace"
@@ -48,41 +48,47 @@
   </div>
 </template>
 
-<script setup lang="ts">
-  const { $toast, $loading } = useNuxtApp();
+<script setup lang="ts"> 
+const {$loading} = useNuxtApp()
   const { getRequests } = useRequestsApi();
 
   const searchText = ref('');
   const inspections = ref([
         {
-          id: 'ertghfg',
+          _id: 'ertghfg',
           imageUrl: '',
+          product: "TEST 1",
           title: 'test ne',
-          seller: 'script',
-          requestAmount: 0,
-          interestRate: 0,
-          deliveryDays: '43', 
+          seller_name: 'script',
+          amount: 49990,
+          interest_rate: 32323230,
+          payback_days: '43', 
        }, 
         {
-          id: 'ertsdsdghfg',
+          _id: 'ertsdsdghfg',
           imageUrl: '',
+          product: "TEST 1",
           title: 'test ne',
-          seller: 'scrireerpt',
-          requestAmount: 0,
-          interestRate: 0,
-          deliveryDays: '43', 
+          seller_name: 'scrireerpt',
+          amount: 49990,
+          interest_rate: 32534323230,
+          payback_days: '43', 
        }, 
         {
-          id: '3434343',
+          _id: '3434343',
           imageUrl: '',
+          product: "TEST 1",
           title: 'test ne',
-          seller: 'script',
-          requestAmount: 0,
-          interestRate: 0,
-          deliveryDays: '43', 
+          seller_name: 'script',
+          amount: 49990,
+          interest_rate: 32323230,
+          payback_days: '43', 
        }, 
   ]);
   const loading: Ref<boolean> = ref(false);
  
+ onBeforeMount(() => {
+  $loading().stop();
+ })
 
 </script>

@@ -135,7 +135,7 @@
       </div>
 
     <div v-else class=" flex items-center justify-center">
-        <GenericNoData
+        <NoData
           class="col-span-2"  
           title="No activities available"
           :hasDetailsText="true"

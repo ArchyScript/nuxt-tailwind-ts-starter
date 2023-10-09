@@ -2,26 +2,26 @@
   <CardContainer
     size="sm"
     :isRouted="true"
-    :routerLink="`/my-deals/${data._id}`"
+    :routerLink="`/inspections/${inspection._id}`"
     customClass="space-y-4"
   >
     <!-- <div class="" >  -->
     <div class="flex space-x-4">
       <div class="flex-1 flex space-x-2 items-center">
         <span class="h-12 w-12 rounded">
-          <img src="~/public/images/img-1.png" class="w-full h-full" :alt="data.title" />
+          <img src="/images/img-1.png" class="w-full h-full" :alt="inspection.title" />
         </span>
 
         <div class="flex-1 truncate space-y-1.5">
-          <h5 class="leading-5 !text-grey-500 truncate">
-            {{ data.product }}
+          <h5 class="leading-5 !text-grey-500 font-medium truncate">
+            {{ inspection.product }}
           </h5>
 
           <p class="flex items-center space-x-1.5">
             <span class="text-xs text-grey-500">Seller:</span>
 
             <span class="text-xs text-primary-500">
-              {{ data.seller_name }}
+              {{ inspection.seller_name }}
             </span>
           </p>
         </div>
@@ -38,14 +38,14 @@
     <div class="flex items-end space-x-4">
       <div class="flex-1 align-right flex-col flex truncate space-y-1">
         <span size="xs" class="text-xs text-grey-400">Request amount</span>
-        <span class="text-xl leading-5 font-medium text-grey-500">${{ data.amount }}</span>
+        <span class="text-xl leading-5 font-medium text-grey-500">${{ formatNumber(inspection.amount) }}</span>
 
-        <p class="text-sm leading-5 text-grey-400">Interest rate: {{ data.interest_rate }}</p>
-        <p class="text-sm leading-5 text-grey-400">Delivery Days: {{ data.payback_days }}</p>
+        <p class="text-sm leading-5 text-grey-400">Interest rate: {{ inspection.interest_rate }}</p>
+        <p class="text-sm leading-5 text-grey-400">Delivery Days: {{ inspection.payback_days }}</p>
       </div>
 
       <span class="flex items-center justify-center">
-        <Button text="View request" :hasBorder="true" textSize="sm" class="!py-3 !px-6" />
+        <Button text="View request" :hasBorder="true" textSize="sm" class="!py-3 !px-6 !text-secondary-500 !ring-secondary-500" />
       </span>
     </div>
     <!-- </div> -->
@@ -53,8 +53,10 @@
 </template>
 
 <script setup lang="ts">
+  import { formatNumber } from '~/utils';
+
   const props = defineProps({
-    data: {
+    inspection: {
       type: Object,
       default: {
         id: '',
