@@ -21,9 +21,9 @@
             </h5> 
 
             <span
-                class="text-sm text-error-500 bg-error-50 px-1.5 leading-5 flex rounded-xl !w-fit h-fit py-0.5"
+                class="text-sm text-secondary-500   px-1.5 leading-5 flex rounded-xl !w-fit h-fit py-0.5"
             >
-                Seller
+                Financier
             </span>
         </div>
         </div>
@@ -43,8 +43,7 @@
             <Button
                 text="Contact financier"
                 customClass="!w-fit"
-                :hasBorder="true"
-                textSize="sm"
+                :hasBorder="true" 
                 :hasIcon="true"
                 iconName="email"
                 class="!py-3 !px-6 !text-secondary-500 !ring-secondary-500"

@@ -66,19 +66,26 @@
             <div> 
               <Button
                 text="Inspect offer" 
-                textSize="sm"
                 :hasIcon="true"
                 iconName="scan"
                 class="!py-3 !px-6"
-              /> 
+              />  
  
               <!-- <Button
-                text="Upload inspection report" 
-                textSize="sm"
+                text="Upload inspection report"  
                 :hasIcon="true"
                 :hasBorder="true"
                 iconName="paper-upload"
                 class="!py-3 !px-6"
+              />  -->
+
+              
+              <!-- <Button
+                text="View inspection report"  
+                :hasIcon="true"
+                :hasBorder="true"
+                iconName="file"
+                class="!py-3 !px-6 !underline !ring-0"
               />  -->
             </div>
           </div>

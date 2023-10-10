@@ -14,12 +14,12 @@
             type="text"
             name="search-box"
             class="h-[3.125rem] !w-full rounded border-none bg-[#FCFCFE] px-12 text-base outline-none placeholder:text-[#656e83]"
-            placeholder="Search campaigns..."
+            placeholder="Search"
             @input="filterDeals"
           />
         </div>
 
-        <div class="flex !h-[3.125rem] !w-fit items-center space-x-4 rounded-lg border px-4">
+        <div class="flex !h-[3.125rem] bg-secondary-50 !w-fit items-center space-x-4 rounded-lg border px-4">
           <IconFilter />
           <span class="text-grey-600 text-sm leading-5">Filter</span> 
         </div>
@@ -30,7 +30,7 @@
     <div v-if="loading"></div>
 
     <div v-else>
-      <section class="grid w-full grid-cols-2 gap-y-8 gap-x-5" v-if="inspections.length">
+      <section class="grid w-full grid-cols-3 gap-y-8 gap-x-5" v-if="inspections.length">
         <CardInspection v-for="inspection in inspections" :key="inspection.id" :inspection="inspection" />
       </section>
 
@@ -55,34 +55,52 @@ const {$loading} = useNuxtApp()
   const searchText = ref('');
   const inspections = ref([
         {
-          _id: 'ertghfg',
+          _id: 'e67rtghfg',
           imageUrl: '',
-          product: "TEST 1",
-          title: 'test ne',
-          seller_name: 'script',
-          amount: 49990,
-          interest_rate: 32323230,
-          payback_days: '43', 
+          product: "TEST 1", 
+          financier: 'script', 
        }, 
         {
-          _id: 'ertsdsdghfg',
+          _id: 'erts67dsdghfg',
           imageUrl: '',
-          product: "TEST 1",
-          title: 'test ne',
-          seller_name: 'scrireerpt',
-          amount: 49990,
-          interest_rate: 32534323230,
-          payback_days: '43', 
+          product: "TEST 1", 
+          financier: 'scrireerpt', 
+       },  
+        {
+          _id: 'ert98ghfg',
+          imageUrl: '',
+          product: "TEST 1", 
+          financier: 'script', 
        }, 
         {
-          _id: '3434343',
+          _id: 'er567tsdsdghfg',
           imageUrl: '',
-          product: "TEST 1",
-          title: 'test ne',
-          seller_name: 'script',
-          amount: 49990,
-          interest_rate: 32323230,
-          payback_days: '43', 
+          product: "TEST 1", 
+          financier: 'scrireerpt', 
+       }, 
+        {
+          _id: '3232',
+          imageUrl: '',
+          product: "TEST 1", 
+          financier: 'script', 
+       }, 
+        {
+          _id: 'ertg2hfg',
+          imageUrl: '',
+          product: "TEST 1", 
+          financier: 'script', 
+       }, 
+        {
+          _id: 'ertsd87sdghfg',
+          imageUrl: '',
+          product: "TEST 1", 
+          financier: 'scrireerpt', 
+       }, 
+        {
+          _id: '3434343343',
+          imageUrl: '',
+          product: "TEST 1", 
+          financier: 'script', 
        }, 
   ]);
   const loading: Ref<boolean> = ref(false);

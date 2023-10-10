@@ -1,11 +1,11 @@
 <template>   
  
-    <CardContainer size="md" class="flex-col space-y-4">
+    <CardContainer size="md" class="flex-col !space-y-4">
         <div class="flex items-center justify-between space-x-2">
             <h4 class="text-lg text-grey-500 font-medium leading-[160%]">Service charge</h4>
 
             <span
-                class="text-secondary-500 text-sm leading-5 bg-secondary-50 px-1.5 flex rounded-xl !w-fit h-fit py-0.5"
+                class="text-success-500  leading-5 bg-success-50 px-1.5 flex rounded-xl !w-fit h-fit py-0.5"
             > paid </span>
         </div>
 
@@ -53,19 +53,25 @@
             <!-- crypto -->
             <div v-else class="space-y-0.5">
                 <h6 class="!text-grey-200 !leading-[160%] text-sm">Address</h6>
-                <div class="flex justify-between items-center truncate space-x-2">
+                <div class="flex justify-between items-center truncate space-x-1">
                     <h4 class="text-lg text-grey-500 truncate leading-[160%]">
                         {{serviceCharge.wallet_address}}
                     </h4>
 
-                    <span
-                        class="p-1.5 rounded !text-secondary-500 bg-secondary-50 cursor-pointer"
-                    >
-                        <IconCopy fill="white" />
+                    <span class="p-1.5 !text-secondary-500 bg-secondary-50 cursor-pointer">
+                        <Copy :text="serviceCharge.wallet_address" /> 
                     </span>
                 </div>
             </div> 
         </CardContainer> 
+
+
+        <Button
+            text="View on block explorer"  
+            :hasBorder="true" 
+            class="!py-3 !px-6 !underline !ring-0"
+            routeLink="/dashboards"
+        />
     </CardContainer> 
 </template>
 
@@ -78,7 +84,7 @@
         default: {
             document_type: "Test",
             amount: "568790",
-            method: "fiat",
+            method: "crypto",
             bank_account: {
                 account_name: "Script",
                 account_number: "32456709",

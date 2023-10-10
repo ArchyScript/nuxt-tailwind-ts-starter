@@ -50,8 +50,7 @@
     },
   });
 
-  import { beforeFileUpload } from '~/utils/upload';
-  import { IconLoader } from '../.nuxt/components';
+  import { beforeFileUpload } from '~/utils/upload'; 
   const { uploadFile } = useCommonApi();
   const { $toast } = useNuxtApp();
 

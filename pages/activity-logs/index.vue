@@ -40,6 +40,8 @@
     <!-- <div v-if="loading"></div> -->
  
       <div v-if="activityLogs.length">
+        <!-- <UploadCustom/>  -->
+        
         <CardContainer size="auto" customClass="space-y-4">
           <table class="table-auto w-full">
             <thead class="bg-ui-bg">
@@ -66,11 +68,11 @@
                   </h5>
                 </td>
                 <td class="border-[1px] border-input-bg bg-transaprent">
-                  <span
-                    class="inline-block text-sm leading-5 text-grey-700 capitalize !font-medium px-6 py-3"
+                  <h5
+                    class="flex justify-center items-center text-grey-700 capitalize leading-5 text-sm font-medium px-6 py-3"
                   >
                     Description
-                  </span>
+                  </h5>
                 </td>
                 <td class="border-[1px] border-input-bg bg-transaprent">
                   <h5
