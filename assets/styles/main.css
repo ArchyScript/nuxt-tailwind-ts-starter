@@ -185,3 +185,7 @@ input[type='number'] {
   margin-left: 20px;
   opacity: 0;
 }
+
+.el-upload-list.el-upload-list--text { 
+  display: none !important;
+}

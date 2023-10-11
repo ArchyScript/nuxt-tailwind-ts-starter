@@ -45,7 +45,8 @@
       <Button
         @click="next"
         :text="btnContinueText"
-        customClass="!py-4 !px-10 !text-white !font-medium !leading-[160%] !max-w-fit"
+        :hasBorder="isBtnOutlined"
+        customClass="!py-4 !px-10 leading-[160%] !max-w-fit"
         class="btn-shadow"
       />
     </div>
@@ -69,6 +70,10 @@
     btnCloseText: {
       type: String,
       default: 'cancel',
+    },
+    isBtnOutlined: {
+      type: Boolean,
+      default: false
     },
     iconWidth: {
       type: Number,

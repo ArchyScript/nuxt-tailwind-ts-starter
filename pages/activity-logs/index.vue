@@ -39,9 +39,7 @@
     <section>
     <!-- <div v-if="loading"></div> -->
  
-      <div v-if="activityLogs.length">
-        <!-- <UploadCustom/>  -->
-        
+      <div v-if="activityLogs.length">  
         <CardContainer size="auto" customClass="space-y-4">
           <table class="table-auto w-full">
             <thead class="bg-ui-bg">

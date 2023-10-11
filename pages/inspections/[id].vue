@@ -1,8 +1,32 @@
 <template>
   <div>  
+    <!-- Modals here -->
+    <div> 
+      <Modal
+        v-if="activeModal == 'upload-inspection-report'"
+        id="upload-inspection-report" 
+        @close="closeModals"
+      > 
+        <ModalsInspectionsUploadReport @close="closeModals" @done="activeModal = 'successful-upload'"/>
+      </Modal> 
+
+      <Modal
+        v-if="activeModal == 'successful-upload'"
+        id="successful-upload" 
+        @close="closeModals" 
+      >
+       <ModalsResponse 
+          titleText="Report uploaded successfully" 
+          message="The inspection report has been uploaded and sent to the Financier. Thanks for partnering with VesselTrust"
+          btnContinueText="View inspection offer"
+          @next="goTo"
+        />  
+      </Modal> 
+    </div>
+    
+    <Disclaimer @close="showDisclaimer = false" v-if="showDisclaimer"/>
+
     <div class="space-y-6"> 
-      <Disclaimer @close="showDisclaimer = false" v-if="showDisclaimer"/>
-      
       <Back text="Inspection Agencies" routerLink="/inspections" />
  
       <div v-if="loading"></div>
@@ -64,20 +88,21 @@
             </div> 
 
             <div> 
-              <Button
+              <!-- <Button
                 text="Inspect offer" 
                 :hasIcon="true"
                 iconName="scan"
                 class="!py-3 !px-6"
-              />  
+              />   -->
  
-              <!-- <Button
+              <Button
                 text="Upload inspection report"  
                 :hasIcon="true"
                 :hasBorder="true"
                 iconName="paper-upload"
                 class="!py-3 !px-6"
-              />  -->
+                @click="activeModal = 'upload-inspection-report'"
+              /> 
 
               
               <!-- <Button
@@ -109,11 +134,27 @@
   import { formatNumber } from '~/utils';
 
   const route = useRoute(); 
+  const router = useRouter(); 
+  const {$loading} = useNuxtApp()
 
   const loading: Ref<boolean> = ref(false);
   const showDisclaimer: Ref<boolean> = ref(true);
   const activeModal = ref('');  
 
   const closeModals = () => activeModal.value = ''; 
+  const goTo = () =>  router.push('/dashboards')
  
+  // const reportUploadCompleted = () => {
+  //   activeModal.value = "successful-upload";
+  //   fetInspectionDetails()
+  // }
+  
+  
+  const fetInspectionDetails = () => {
+    console.log("FetInspectionDetails")
+    $loading().stop()
+  }
+  onBeforeMount(() => {
+    fetInspectionDetails()
+  })
 </script>

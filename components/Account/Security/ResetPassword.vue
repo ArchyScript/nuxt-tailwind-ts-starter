@@ -75,7 +75,7 @@
                 text="Save"
                 type="submit"
                 :loading="loading"
-                customClass="!py-4 !px-11 !bg-primary-500   !leading-[160%]"
+                customClass="!py-4 !px-11 !w-fit   !leading-[160%]"
             /> 
         </div>
     </form> 

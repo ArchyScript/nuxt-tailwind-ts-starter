@@ -1,6 +1,5 @@
 <template>
-  <CardContainer
-    size="sm"
+  <CardContainer 
     :isRouted="true"
     :routerLink="`/inspections/${inspection._id}`"
     customClass="!space-y-4"

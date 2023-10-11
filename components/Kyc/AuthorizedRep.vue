@@ -3,8 +3,7 @@
     <div>  
       <Modal
         v-if="activeModal == 'liveness-verification'"
-        id="liveness-verification"
-        size="md"
+        id="liveness-verification" 
         @close="closeModal"
       >
         <LivenessCheck @done="getSelfie" @close="closeModal" />

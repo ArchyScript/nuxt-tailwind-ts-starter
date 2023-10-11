@@ -1,13 +1,29 @@
 <template>
-  <div>  
-    <!-- modal -->
-    <Modal id="delete-account" size="md" v-if="showDeleteModal" @close="showDeleteModal = false">
+  <div>   
+    <!-- Modals here -->
+    <div>  
+    <Modal id="delete-account" v-if="activeModal == 'delete-account'" @close="closeModals">
         <ModalsAccountDelete
             :warnings="deleteWarnings"
-            @close="showDeleteModal = false"
+            @close="closeModals"
             @deleteAcount="deleteInspectorAccount"
         />
-    </Modal> 
+    </Modal>
+
+      <Modal
+        v-if="activeModal == 'successful-delete'"
+        id="successful-delete" 
+        @close="closeModals" 
+      >
+       <ModalsResponse 
+          titleText="account deleted successfully" 
+          message="We are sorry to see you go, please note that you can still create a new account and the amazing features we provide."
+          btnContinueText="Go to homepage"
+          :isBtnOutlined="true"
+          @next="goTo"
+        />  
+      </Modal> 
+    </div> 
  
     <CardContainer class="!p-5 rounded-md space-y-2 w-full">
         <h6 class="textx-sm font-medium text-grey-300 py-3 border-b-[1.5px] border-ui-bg">
@@ -34,7 +50,7 @@
 
         <div class="flex pt-3">
             <Button
-                @click="showDeleteModal = true"
+                @click="openModal('delete-account')"
                 text="Delete my account"
                 class="!w-auto py-3 !px-6 !bg-error-50 !text-error-500"
                 :hasIcon="true"
@@ -46,11 +62,10 @@
 </template>
 
 <script setup lang="ts"> 
-  const router = useRouter();
-  const { $toast, $loading } = useNuxtApp();  
-  const { deleteFinancier } = useAuthApi(); 
+  const router = useRouter(); 
 
   //  
+  const activeModal = ref('');  
   const showDeleteModal = ref<Boolean>(false); 
   const deleteWarnings = ref([
     { text: 'Delete your account info and transaction history' },
@@ -58,13 +73,18 @@
     { text: 'Cancel all ongoing trades and contract.' },
   ]);  
 
+  
+  const openModal = (modalId: any) => activeModal.value = modalId; 
+  const closeModals = () => activeModal.value = ''; 
+  const goTo = () =>  router.push('/dashboards')
+
   // functions 
   const deleteInspectorAccount = async () => {
-    console.log("account deleteed")
-    // const response = await deleteFinancier();
+    console.log("account deleteed") 
     // const { data, error } = response;
 
     // if (error) return $toast('show', { type: 'error', message: error.message }); 
+    openModal('successful-delete')
   }; 
 </script>
 
