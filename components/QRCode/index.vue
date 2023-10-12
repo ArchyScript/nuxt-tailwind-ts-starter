@@ -1,9 +1,14 @@
 <template>
-  <div v-if="qrCodeUrl" class="w-fit border border-primary-500 rounded-lg">
+  <div 
+    v-if="qrCodeUrl" 
+    class="w-fit border-[0.1px] border-grey-100 rounded-lg"
+    :class="`${colorVariant == 'grey' && 'border-grey-100'}`"
+  >
     <img
       :src="qrCodeUrl"
       alt="QR Code"
-      class="h-[170px] max-w-full rounded-lg border border-primary-500`"
+      class="max-w-full rounded-lg border border-primary-500`"
+      :class="`${size == 'sm' && 'h-[170px]'} ${size == 'md' && 'h-[263px] w-[233px]'}`"
     />
   </div>
 </template>
@@ -16,14 +21,14 @@
       type: String,
       default: '',
     },
-    width: {
-      type: Number,
-      default: 170,
-    },
-    height: {
-      type: Number,
-      default: 170,
-    },
+    size: {
+      type: String,
+      default: 'md',
+    }, 
+    colorVariant: {
+      type: String,
+      default: 'grey',
+    }, 
   });
 
   //   const text = ref<string>('');

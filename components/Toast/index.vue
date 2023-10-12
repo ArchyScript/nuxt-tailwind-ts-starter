@@ -1,7 +1,7 @@
 <template>
   <div
     v-show="showToast"
-    :class="`z-50 fixed top-2 right-2 w-80 p-4 rounded-sm bg-warning-50`"
+    :class="`z-50 fixed top-2 right-2 w-80 p-4 rounded-sm bg-${updatedTypeWithColorMatch}-50`"
   >
     <!-- message -->
     <p :class="`text-${updatedTypeWithColorMatch}-500 mt-2`">
@@ -38,7 +38,7 @@
   });
 
   const updatedTypeWithColorMatch = computed(() => {
-    if (type.value == 'info') return 'secondary'; 
+    if (type.value == 'info') return 'secondary';
     return type.value;
   });
 

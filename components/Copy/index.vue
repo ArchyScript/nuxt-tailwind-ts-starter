@@ -25,7 +25,7 @@
     copyToClipboard(props.text);
     $toast('show', {
       type: 'succeess',
-      message: props.text,
+      message: props.text || 'Text copied to clipboard',
     });
     emit('copy', props.text);
   };

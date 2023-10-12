@@ -32,10 +32,10 @@
                 </div>
 
                 <div class="flex-1 flex-col space-y-1 truncate">
-                    <h6 class="truncate text-sm font-medium leading-[160%]"> {{ selectedFile.name }} </h6>
+                    <h6 class="truncate text-sm font-medium leading-[160%]"> Name <!-- {{ "selectedFile.name" }} --> </h6>
 
                     <p class="text-xs space-x-2 text-grey-300 font-medium">
-                        <span> {{ formatBytes(selectedFile?.total) }} </span>
+                        <span> {{ formatBytes(300000) }} </span>
                         <span> | </span>
                         <span> 4 seconds left </span>
                     </p>
@@ -98,21 +98,7 @@ const  handleChange = (event: any) => {
     selectedFile.value.name = event.name;
 }
 
-const beforeAvatarUpload = (rawFile: any) => {
-    // if (
-    // rawFile.type !==
-    //     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" ||
-    // rawFile.type === "application/vnd.ms-excel"
-    // ) {
-    // // this.$toast.error("Document must be and Excel file!");
-    //     clear();
-    //     return false;
-    // }
-    // // to check maximum size alowed
-    // else if (rawFile.size / 1024 / 1024 > 50) {
-    // //   this.$toast.error('Avatar picture size can not exceed 50MB!')
-    //   return false
-    // } 
+const beforeAvatarUpload = (rawFile: any) => { 
     return true;
 }
 

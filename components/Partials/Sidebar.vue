@@ -22,8 +22,8 @@
           </div>
         </div>
 
-        <div class="flex-1">
-          <h5 class="text-warning-50 font-medium mb-0.5">{{ "financierFullname" }}</h5>
+        <div class="flex-1 space-y-0.5">
+          <h5 class="text-warning-50 font-medium">{{ "financierFullname" }}</h5>
           <h6 class="leading-5 text-sm text-warning-500">{{ "financierUserRole"   }}</h6>
         </div>
       </div>
@@ -37,7 +37,7 @@
         <nuxt-link v-for="link in mainMenu" :key="link.route" :to="link.route">
           <div
             class="flex items-center space-x-2 rounded-md font-Poppins text-grey-200 py-2.5 px-4"
-            :class="tabIsActive(link.route) ? 'bg-warning-500 text-white' : ' hover:bg-grey-300'"
+            :class="tabIsActive(link.route) ? 'bg-warning-500 text-white' : 'hover:bg-grey-500 hover:text-warning-300'"
           >
             <IconSidebar :title="link.icon" />
 
@@ -55,7 +55,7 @@
         <nuxt-link v-for="preference in preferences" :key="preference.route" :to="preference.route">
           <div
             class="flex items-center space-x-2 rounded-md font-Poppins text-grey-200 py-2.5 px-4"
-            :class="tabIsActive(preference.route) && 'bg-warning-500 text-warning-50 '"
+            :class="tabIsActive(preference.route) ? 'bg-warning-500 text-warning-50' : 'hover:bg-grey-500 hover:text-warning-300'"
           >
             <IconSidebar :title="preference.icon" />
             <span>{{ preference.title }}</span>
