@@ -11,7 +11,7 @@
           <label for="email" class="block mb-2 leading-6 text-grey-500">Email Address</label>
 
           <div class="relative bg-input-bg rounded">
-            <span class="icon icon-left text-grey-40">
+            <span class="icon icon-left !text-grey-300">
               <IconEmail />
             </span>
 
@@ -50,51 +50,7 @@
               <IconEyes :title="showPassword ? 'open' : 'close'" />
             </span>
           </div>
-        </div>
-
-        <div class="mb-4 flex items-center space-x-4">
-          <div class="flex-1">
-            <label for="password" class="flex space-x-2 items-center mb-2 leading-6 text-grey-500">
-              <span>Payback Period</span>
-
-              <IconInfo class="text-grey-40" />
-            </label>
-
-            <div class="relative bg-input-bg w-full rounded">
-              <input
-                id="payback_days"
-                type="text"
-                class="input-field px-4"
-                placeholder="Payback Period"
-                v-model="payload.payback_days"
-                @blur="v$.payback_days.$touch()"
-                :class="v$.payback_days.$invalid && 'error'"
-              />
-            </div>
-          </div>
-
-          <div class="flex-1">
-            <label
-              for="interest_rate"
-              class="flex space-x-2 items-center mb-2 leading-6 text-grey-500"
-            >
-              <span>Interest rate</span>
-
-              <IconInfo class="text-grey-40" />
-            </label>
-            <div class="relative bg-input-bg w-full rounded">
-              <input
-                id="interest_rate"
-                class="input-field px-4"
-                type=" text"
-                placeholder="Interest rate"
-                v-model="payload.interest_rate"
-                @blur="v$.interest_rate.$touch()"
-                :class="v$.interest_rate.$invalid && 'error'"
-              />
-            </div>
-          </div>
-        </div>
+        </div> 
 
         <div class="block w-full mt-6">
           <Button type="submit" text="Create account" :loading="loading" />
@@ -138,9 +94,7 @@
   const loading: Ref<boolean> = ref(false);
   const payload: Ref<any> = ref({
     email: '',
-    password: '',
-    payback_days: '',
-    interest_rate: '',
+    password: '', 
   });
 
   //

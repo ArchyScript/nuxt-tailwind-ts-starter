@@ -1,9 +1,9 @@
 <template>
-  <div class="space-y-8">    
+  <div class="space-y-8">
     <h4 class="text-center text-grey-500 text-xl font-medium leading-6">
       Inspection Agency details
     </h4>
-       
+
     <form class="space-y-4">
       <div class="flex items-center space-x-4">
         <div class="flex-1">
@@ -39,6 +39,50 @@
         </div>
       </div>
 
+      <div class="flex items-center space-x-4">
+        <div class="w-1/2">
+          <label for="nationality" class="block mb-2 leading-6 text-grey-500">
+            Company country
+          </label>
+
+          <div class="relative bg-input-bg w-full pl-8 rounded">
+            <span class="icon icon-left text-grey-300">
+              <Avatar
+                :name="`${countryISO2}_16`"
+                :isSubFolder="true"
+                subfolderPath="flags"
+              />
+            </span>
+
+            <el-select
+              v-model="kycPayload.company_country"
+              class="p-1 !bg-transparent !focus:text-black !w-full"
+              placeholder="Select Country"
+              size="large"
+              remote
+              filterable
+              remote-show-suffix
+              default-first-option
+              :loading="isFilteringCountry"
+              :remote-method="handleCountrySearch"
+              loading-text="Loading Countries"
+              no-match-text="No country match... check spelling"
+              no-data-text="No match"
+            >
+              <!-- reserve-keyword  -->
+              <el-option
+                v-for="country in countries"
+                :key="country.name"
+                :label="country.name"
+                :value="country.name"
+                :name="country.value"
+                @click="getCountryCode(country)"
+              />
+            </el-select>
+          </div>
+        </div>
+      </div>
+
       <div>
         <label for="address" class="block mb-2 leading-6 text-grey-500">
           Domicile address of the company on the commercial register
@@ -61,45 +105,61 @@
 
       <div>
         <label class="block mb-2 leading-6 text-grey-500">
-          Is the company considered a financial intermediary?
+          Is the company subject to appropriate prudential supervision?
         </label>
 
         <div class="w-3/5 flex items-center space-x-0">
-          <el-radio-group v-model="kycPayload.company_financial_intermediary" class="!w-full">
-            <el-radio label="yes" border class="flex-1 !h-[3rem] !px-4">Yes</el-radio>
-            <el-radio label="no" border class="flex-1 !h-[3rem] !px-4">No</el-radio>
+          <el-radio-group
+            v-model="kycPayload.appropriate_prudential_supervision"
+            class="!w-full"
+          >
+            <el-radio label="yes" border class="flex-1 !h-[3rem] !px-4">
+              Yes
+            </el-radio>
+            <el-radio label="no" border class="flex-1 !h-[3rem] !px-4">
+              No
+            </el-radio>
           </el-radio-group>
         </div>
       </div>
 
       <div>
         <label class="block mb-2 leading-6 text-grey-500">
-          IIs the company subject to appropriate regulation with respect to combating money
-          laundering?
+          IIs the company subject to appropriate regulation with respect to
+          combating money laundering?
         </label>
 
         <div class="w-3/5 flex items-center space-x-0">
-          <el-radio-group v-model="kycPayload.aml_appropriate_regulation" class="!w-full">
-            <el-radio label="yes" border class="flex-1 !h-[3rem] !px-4">Yes</el-radio>
-            <el-radio label="no" border class="flex-1 !h-[3rem] !px-4">No</el-radio>
+          <el-radio-group
+            v-model="kycPayload.aml_appropriate_regulation"
+            class="!w-full"
+          >
+            <el-radio label="yes" border class="flex-1 !h-[3rem] !px-4">
+              Yes
+            </el-radio>
+            <el-radio label="no" border class="flex-1 !h-[3rem] !px-4">
+              No
+            </el-radio>
           </el-radio-group>
         </div>
-      </div> 
+      </div>
 
       <div>
-        <label class="block mb-2 leading-6 text-grey-500">Upload Director`s passport</label>
+        <label class="block mb-2 leading-6 text-grey-500">
+          Upload Director`s passport
+        </label>
 
         <div class="w-3/5">
           <Upload
-            uploadId="director_passport"
-            :modelValue="kycPayload.director_passport"
+            uploadId="certificate_of_incorporation"
+            :modelValue="kycPayload.certificate_of_incorporation"
             @uploaded="onUploaded"
           />
         </div>
       </div>
     </form>
-    
-    <div class="flex justify-between items-center space-x-4" >
+
+    <div class="flex justify-between items-center space-x-4">
       <Button
         text="Back"
         class="!w-auto !px-8"
@@ -116,60 +176,90 @@
   </div>
 </template>
 
-
 <script setup lang="ts">
-  definePageMeta({ layout: 'auth' });
- 
-  import { useAuthStore } from '~/store/authentication';
+  definePageMeta({ layout: "auth" })
 
-  const { $toast } = useNuxtApp();  
-  const { authenticatedUser, setKYCData } = useAuthStore();
- 
+  import { useConstantsStore } from "~/store/constants"
+  import { useAuthStore } from "~/store/authentication"
+
+  const { $toast } = useNuxtApp()
+  const { setKYCData } = useAuthStore()
+
   const emit = defineEmits(["done", "back"])
 
-  const kycPayload: Ref<any> = ref({ 
-    company_name: '',
-    company_reg_number: '', 
-    company_address: '',
-    company_financial_intermediary: '',
-    aml_appropriate_regulation: '', 
-    director_passport: '', 
-  });
+  const isFilteringCountry: Ref<boolean> = ref(false)
+  const countries: Ref<any> = ref([])
+  const kycPayload: Ref<any> = ref({})
+  const countryISO2 = ref("")
+  const getCountryCode = (selectedCountry: any) => {
+    countryISO2.value = selectedCountry.iso2.toLowerCase()
+  }
 
-  // computed
-  const authUser = computed(() => authenticatedUser?.profile); 
+  const allCountries = computed(() => useConstantsStore().countries)
 
   //  watch
-  watch(kycPayload, (newValue) => {setKYCData(newValue)},
-    { deep: true },
-  ); 
+  watch(
+    kycPayload,
+    (newValue) => {
+      setKYCData(newValue)
+    },
+    { deep: true }
+  )
 
   // rules here
 
   //  validation  here
 
-  // functions   
-  const onUploaded = ({ image_url }: any) => (kycPayload.value.director_passport = image_url);
-  const goBack = async () =>  emit("back")
+  // functions
+  const onUploaded = ({ image_url }: any) => {
+    return (kycPayload.value.certificate_of_incorporation = image_url)
+  }
+
+  const goBack = async () => emit("back")
+
   const nextStep = async () => {
-    const isFormValidated = true 
-    if (!isFormValidated) return $toast('show', { type: 'error', message: "Some fields are not validated" }); 
+    const isFormValidated = true
+    if (!isFormValidated)
+      return $toast("show", {
+        type: "error",
+        message: "Some fields are not validated",
+      })
 
-    emit('done')
-  };
-  
+    emit("done")
+  }
+
+  const handleCountrySearch = (query: string) => {
+    if (query) {
+      isFilteringCountry.value = true
+      setTimeout(() => {
+        isFilteringCountry.value = false
+        countries.value = allCountries.value.filter((country: any) => {
+          return country.name.toLowerCase().includes(query.toLowerCase())
+        })
+      }, 50)
+    } else {
+      countries.value = allCountries.value
+    }
+  }
+
   const retoreSession = async () => {
-    const kycInStorage = localStorage.getItem('kycData');
-    if (!kycInStorage) return  $toast('show', { type: 'success', message: "KYC data retrieved" }); 
+    const kycInStorage = localStorage.getItem("kycData")
+    if (!kycInStorage) return
 
-    const deserializedData = JSON.parse(kycInStorage);
+    const deserializedData = JSON.parse(kycInStorage)
+    if (Object.keys(deserializedData).length > 0) {
+      return (kycPayload.value = deserializedData)
+    }
 
-    if (Object.keys(deserializedData).length > 0) return kycPayload.value = deserializedData;  
-    return setKYCData(kycPayload.value); 
-  };
+    allCountries.value.forEach((country: any) => {
+      if (country.name == kycPayload.value.nationality) {
+        countryISO2.value = country.iso2.toLowerCase()
+      }
+    })
+  }
 
-  // lifecycle 
-  onBeforeMount(async () => retoreSession());
+  // lifecycle
+  onBeforeMount(async () => retoreSession())
 </script>
 
 <style scoped>
