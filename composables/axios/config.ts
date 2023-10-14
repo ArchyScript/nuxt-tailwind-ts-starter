@@ -14,7 +14,6 @@ export const getAuthHeaders = (): AxiosRequestHeaders & any => {
   const headers = {
     Authorization: `Bearer ${authToken}`,
   }
-
   return headers
 }
 
@@ -36,6 +35,46 @@ const uploadAxiosInstance = axios.create({
     "Content-Type": "multipart/form-data",
   },
 })
+
+//
+defaultAxiosInstance.interceptors.request.use(
+  (config) => {
+    config.headers = {
+      ...config.headers,
+      ...getAuthHeaders(),
+    }
+    return config
+  },
+  (error) => {
+    return Promise.reject(error)
+  }
+)
+
+commonAxiosInstance.interceptors.request.use(
+  (config) => {
+    config.headers = {
+      ...config.headers,
+      ...getAuthHeaders(),
+    }
+    return config
+  },
+  (error) => {
+    return Promise.reject(error)
+  }
+)
+
+uploadAxiosInstance.interceptors.request.use(
+  (config) => {
+    config.headers = {
+      ...config.headers,
+      ...getAuthHeaders(),
+    }
+    return config
+  },
+  (error) => {
+    return Promise.reject(error)
+  }
+)
 
 export { defaultAxiosInstance, commonAxiosInstance, uploadAxiosInstance }
 

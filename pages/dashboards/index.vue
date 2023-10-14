@@ -1,10 +1,12 @@
 <template>
-  <div> 
-    <div class="space-y-6"> 
+  <div>
+    <div class="space-y-6">
       <section class="flex justify-between items-center">
-        <h4 class="flex-1 text-[1.125rem] font-semibold font-Poppins text-grey-500">
-          Hi,
-        <span class="text-secondary-600">{{ financierFullname  }}</span>
+        <h4
+          class="flex-1 text-[1.125rem] font-semibold font-Poppins text-grey-500"
+        >
+          Hi
+          <span class="text-secondary-600">{{ inspectorFullname }}</span>
           👋🏻
         </h4>
 
@@ -19,10 +21,26 @@
 
       <!-- card -->
       <section class="grid w-full grid-cols-4 gap-5">
-        <CardLeaderboard title="Total inspected trades" :amount="inspectedDeals" :isIncrease="true" />
-        <CardLeaderboard title="ongoing trades" :amount="ongoingDeals" :isIncrease="false" />
-        <CardLeaderboard title="closed trades" :amount="closedDeals.length" :isIncrease="false" />
-        <CardLeaderboard title="New request" :amount="newRequests" :isIncrease="false" />
+        <CardLeaderboard
+          title="Total inspected trades"
+          :amount="approvedInspections.length"
+          :isIncrease="true"
+        />
+        <CardLeaderboard
+          title="ongoing trades"
+          :amount="pendingInspections"
+          :isIncrease="false"
+        />
+        <CardLeaderboard
+          title="closed trades"
+          :amount="rejectedInspections"
+          :isIncrease="false"
+        />
+        <CardLeaderboard
+          title="New request"
+          :amount="requestedInspections"
+          :isIncrease="false"
+        />
       </section>
 
       <!-- chart and trades section -->
@@ -33,7 +51,9 @@
             <div class="flex justify-between items-center">
               <h6 class="text-sm text-grey-500">Revenue</h6>
 
-              <span class="text-sm text-center cursor-pointer border px-4 py-1.5 rounded">
+              <span
+                class="text-sm text-center cursor-pointer border px-4 py-1.5 rounded"
+              >
                 2021
               </span>
             </div>
@@ -41,7 +61,10 @@
             <!-- chart -->
             <div class="flex items-center justify-center flex-grow">
               <div v-if="hasChart" class="flex-grow">
-                <ChartsLine :chartData="temperatureChartData" :chartOptions="chartOptions" />
+                <ChartsLine
+                  :chartData="temperatureChartData"
+                  :chartOptions="chartOptions"
+                />
               </div>
 
               <NoData v-else />
@@ -71,26 +94,37 @@
           <CardContainer class="space-y-5 px-8 py-6 flex-col">
             <div class="flex justify-between items-center">
               <h6 class="text-sm text-grey-600">Recent requests</h6>
-              <span class="flex text-sm leading-5 cursor-pointer text-secondary-500">see all</span>
+              <span
+                class="flex text-sm leading-5 cursor-pointer text-secondary-500"
+                >see all</span
+              >
             </div>
 
             <div class="space-y-4 pb-6">
               <div class="flex justify-between items-center">
-                <h6 class="text-sm font-medium cursor-pointer text-grey-200">Financier Name</h6>
-                <span class="text-sm leading-5 cursor-pointer text-grey-200">Price</span>
+                <h6 class="text-sm font-medium cursor-pointer text-grey-200">
+                  Financier Name
+                </h6>
+                <span class="text-sm leading-5 cursor-pointer text-grey-200"
+                  >Price</span
+                >
               </div>
 
               <!-- trade list -->
               <div>
                 <div
-                  v-if="recentTrades.length "
+                  v-if="recentTrades"
                   class="flex-col max-h-[25rem] overflow-scroll no-scrollbar"
                 >
-                  <CardTrade v-for="trade in recentTrades" :key="trade.id" :trade="trade" />
+                  <CardTrade
+                    v-for="trade in recentTrades"
+                    :key="trade.id"
+                    :trade="trade"
+                  />
                 </div>
 
                 <div v-else class="flex items-center justify-center">
-                  <NoData  title="No new request"/>
+                  <NoData title="No new request" />
                 </div>
               </div>
             </div>
@@ -102,82 +136,87 @@
 </template>
 
 <script setup lang="ts">
-  import { useAuthStore } from '~/store/authentication';
+  import { useAuthStore } from "~/store/authentication"
 
-  const { $toast, $loading } = useNuxtApp();
-  const { dashbaordStats } = useRequestsApi();
-  const { authenticatedUser, logout, getAuthenticatedUser } = useAuthStore();
+  const { $toast, $loading } = useNuxtApp()
+  const { dashbaordStats } = useRequestsApi()
+  const { authenticatedUser, getAuthenticatedUser } = useAuthStore()
 
-  const authUser: any = computed(() => authenticatedUser);
-  const financierFullname = computed(
-    () => `${authenticatedUser?.kyc?.first_name} ${authenticatedUser?.kyc?.last_name}`,
-  );
+  const authUser: any = computed(() => authenticatedUser)
+  // const authUser: Ref<any> = ref({})
+  const inspectorFullname = computed(() => {
+    return `${authUser.value?.kyc?.first_name || ""} ${
+      authUser.value?.kyc?.last_name || ""
+    },`
+  })
 
-  const activeModal = ref('');
+  // const inspectorFullname = computed(
+  //   () =>
+  //     `${authenticatedUser?.kyc?.first_name} ${authenticatedUser?.kyc?.last_name},`
+  // )
 
-  const hasChart = ref(false);
-  const closedDeals = ref([]);
-  const inspectedDeals = ref(0);
-  const ongoingDeals = ref(0);
-  const newRequests = ref(0);
+  const hasChart = ref(false)
+  const approvedInspections = ref([])
+  const rejectedInspections = ref(0)
+  const pendingInspections = ref(0)
+  const requestedInspections = ref(0)
 
   const recentTrades = ref([
     {
-      id: '1',
-      imageUrl: '~/public/images/img-1.png',
+      id: "1",
+      imageUrl: "~/public/images/img-1.png",
       isVerified: true,
-      title: 'BLCO',
+      title: "BLCO",
       amount: 1000074300,
-      status: 'cancelled',
+      status: "cancelled",
     },
-  ]);
-
-  const closeModals = () => {
-    activeModal.value = '';
-  };
+  ])
 
   const fetchDashboardData = async () => {
-    // $loading().start();
-    // const response = await dashbaordStats();
-    // const { data, error } = response;
-    $loading().stop();
+    $loading().start()
+    const response = await dashbaordStats()
+    $loading().stop()
+    const { data, error } = response
 
-    // if (error) return $toast('show', { type: 'error', message: error?.message });
+    if (error) return $toast("show", { type: "error", message: error?.message })
 
-    // closedDeals.value = data?.data?.closedDeals;
-    // inspectedDeals.value = data?.data?.inspectedDeals;
-    // ongoingDeals.value = data?.data?.ongoingDeals;
-    // newRequests.value = data?.data?.newRequests;
-  };
+    approvedInspections.value = data?.data?.approvedInspections
+    rejectedInspections.value = data?.data?.rejectedInspections
+    pendingInspections.value = data?.data?.pendingInspections
+    requestedInspections.value = data?.data?.requestedInspections
+  }
 
   interface ChartData {
-    labels: string[];
+    labels: string[]
     datasets: {
-      label: string;
-      data: number[];
-      borderColor: string;
-      fill?: boolean;
-    }[];
+      label: string
+      data: number[]
+      borderColor: string
+      fill?: boolean
+    }[]
   }
 
   const temperatureChartData = ref<ChartData>({
-    labels: ['12:00', '12:30', '1:00', '1:30', '2:00', '2:30'],
+    labels: ["12:00", "12:30", "1:00", "1:30", "2:00", "2:30"],
     datasets: [
       {
-        label: 'Temperature',
+        label: "Temperature",
         data: [25, 28, 30, 27, 26, 29],
-        borderColor: 'blue',
+        borderColor: "blue",
         fill: false,
       },
     ],
-  });
+  })
 
   const chartOptions = {
     responsive: true,
     maintainAspectRatio: false,
-  };
+  }
 
-  onBeforeMount(async () => { 
-    fetchDashboardData(); 
-  });
+  onBeforeMount(async () => {
+    console.log("authenticatedUser:", authenticatedUser)
+
+    await getAuthenticatedUser()
+    fetchDashboardData()
+  })
 </script>
