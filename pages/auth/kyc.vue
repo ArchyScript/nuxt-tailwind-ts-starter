@@ -89,26 +89,4 @@
   })
 </script>
 
-<style scoped>
-  .input-field {
-    @apply w-full flex-1 bg-transparent rounded leading-5 block text-sm py-3.5 outline-0 border-0 ring-0  focus:border-0 focus:ring-0 focus:outline-0;
-  }
-  .input-field.error {
-    @apply border border-error-500 text-red-500;
-  }
-  .input-field.success {
-    @apply border border-success-500 bg-success-50;
-  }
-
-  .icon {
-    @apply absolute top-0 h-full rounded-tl rounded-bl bg-transparent flex justify-center items-center px-[1.125rem];
-  }
-
-  .icon.icon-left {
-    @apply rounded-tl rounded-bl left-0;
-  }
-
-  .icon.icon-right {
-    @apply rounded-tr rounded-br right-0 cursor-pointer;
-  }
-</style>
+<style scoped></style>

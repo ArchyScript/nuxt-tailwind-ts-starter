@@ -155,7 +155,7 @@
             readonly
             type="email"
             placeholder="example@gmail.com"
-            :value="authUser.kyc.email"
+            :value="authUser?.kyc?.email"
           />
 
           <span class="icon icon-right text-success-500">

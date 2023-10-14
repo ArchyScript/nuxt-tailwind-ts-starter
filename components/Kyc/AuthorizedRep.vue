@@ -33,8 +33,13 @@
                 type="text"
                 class="input-field !pl-12 pr-4"
                 placeholder="enter first name"
-                v-model.trim="kycPayload.first_name"
+                v-model="kycPayload.first_name"
               />
+              <!-- @blur="v$.first_name.$touch()"
+                :class="
+                  v$.first_name.$dirty &&
+                  (v$.first_name.$invalid ? 'error' : 'valid')
+                " -->
             </div>
           </div>
 
@@ -53,7 +58,7 @@
                 type="text"
                 class="input-field !pl-12 pr-4"
                 placeholder="enter first name"
-                v-model.trim="kycPayload.last_name"
+                v-model="kycPayload.last_name"
               />
             </div>
           </div>
@@ -299,13 +304,8 @@
 
   const emit = defineEmits(["done"])
 
-  import {
-    required,
-    email,
-    minLength,
-    maxLength,
-    helpers,
-  } from "@vuelidate/validators"
+  import { required, email } from "@vuelidate/validators"
+
   import { useVuelidate } from "@vuelidate/core"
   import { useConstantsStore } from "~/store/constants"
   import { useAuthStore } from "~/store/authentication"
@@ -321,9 +321,42 @@
   const nationalityISO2 = ref("")
   const kycPayload: Ref<any> = ref({})
 
+  /* 
+    first_name: "",
+    last_name: "",
+    address: "",
+    nationality: "",
+    email: "",
+    power_of_attorney: "",
+    pep: "",
+    international_passport: "",
+    selfie: "",
+    phone_number: "",
+    passport_number: "", */
+
   // computed
   const authUser = computed(() => authenticatedUser?.profile)
   const allCountries = computed(() => useConstantsStore().countries)
+  const isFieldValid = computed(() => v$.value.$error)
+
+  // rules
+  const validationRules = computed(() => {
+    return {
+      first_name: { required: required },
+      last_name: { required },
+      address: { required },
+      nationality: { required },
+      email: { required, email },
+      power_of_attorney: { required },
+      pep: { required },
+      international_passport: { required },
+      selfie: { required },
+      phone_number: { required },
+      passport_number: { required },
+    }
+  })
+
+  const v$ = useVuelidate(validationRules, kycPayload.value)
 
   //  watch
   watch(
@@ -333,23 +366,6 @@
     },
     { deep: true }
   )
-
-  // rules
-  const rules = {
-    first_name: { required },
-    last_name: { required },
-    address: { required },
-    nationality: { required },
-    // phone_number: { required },
-    email: { required },
-    power_of_attorney: { required },
-    pep: { required },
-    international_passport: { required },
-    selfie: { required },
-  }
-
-  //  validation
-  const v$ = useVuelidate(rules, kycPayload.value)
 
   // functions
   const closeModal = () => (activeModal.value = "")
@@ -362,6 +378,8 @@
   }
 
   const nextStep = async () => {
+    // v$.value.$touch()
+
     const isFormValidated = true
     if (!isFormValidated)
       return $toast("show", {
@@ -418,13 +436,17 @@
 
 <style scoped>
   .input-field {
-    @apply w-full flex-1 bg-transparent rounded leading-5 block text-sm py-3.5 outline-0 border-0 ring-0  focus:border-0 focus:ring-0 focus:outline-0;
+    @apply bg-transparent focus:bg-transparent   focus:ring-primary-400 focus:ring-1 w-full flex-1 rounded leading-5 block text-sm py-3.5 outline-0 border-0;
   }
+  /* @apply w-full flex-1 bg-transparent rounded leading-5 block text-sm py-3.5 outline-0  focus:border-0  focus:outline-0; */
   .input-field.error {
-    @apply border border-error-500 text-red-500;
+    @apply ring-2 ring-error-500;
+  }
+  .input-field.valid {
+    @apply ring-1 ring-primary-500;
   }
   .input-field.success {
-    @apply border border-success-500 bg-success-50;
+    @apply ring-1 ring-success-500 bg-success-50;
   }
 
   .icon {
