@@ -93,7 +93,7 @@
       <Button
         text="Save"
         type="submit"
-        :disabled="isFieldValid"
+        :disabled="fieldHasError"
         :loading="loading"
         customClass="!py-4 !px-11 !w-fit   !leading-[160%]"
       />
@@ -123,7 +123,7 @@
     confirm_password: "",
   })
 
-  const isFieldValid = computed(() => v$.value.$error)
+  const fieldHasError = computed(() => v$.value.$error)
   const validationRules = computed(() => {
     return {
       old_password: {
@@ -157,7 +157,7 @@
 
   const changeFinancierPassword = async () => {
     v$.value.$touch()
-    if (!isFieldValid) return
+    if (fieldHasError.value) return
 
     loading.value = true
     const payload = {
@@ -169,12 +169,13 @@
 
     loading.value = false
 
-    localStorage.removeItem("authToken")
     if (error) return $toast("show", { type: "error", message: error.message })
+
     $toast("show", {
       type: "success",
       message: data?.message || "Password updated",
     })
+    localStorage.removeItem("authToken")
 
     setTimeout(
       () =>

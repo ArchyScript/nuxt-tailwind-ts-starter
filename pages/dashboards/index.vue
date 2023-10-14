@@ -6,7 +6,7 @@
           class="flex-1 text-[1.125rem] font-semibold font-Poppins text-grey-500"
         >
           Hi
-          <span class="text-secondary-600">{{ inspectorFullname }}</span>
+          <span class="text-secondary-600">{{ inspectorFullname && "," }}</span>
           👋🏻
         </h4>
 
@@ -143,17 +143,11 @@
   const { authenticatedUser, getAuthenticatedUser } = useAuthStore()
 
   const authUser: any = computed(() => authenticatedUser)
-  // const authUser: Ref<any> = ref({})
   const inspectorFullname = computed(() => {
     return `${authUser.value?.kyc?.first_name || ""} ${
       authUser.value?.kyc?.last_name || ""
-    },`
+    }`
   })
-
-  // const inspectorFullname = computed(
-  //   () =>
-  //     `${authenticatedUser?.kyc?.first_name} ${authenticatedUser?.kyc?.last_name},`
-  // )
 
   const hasChart = ref(false)
   const approvedInspections = ref([])

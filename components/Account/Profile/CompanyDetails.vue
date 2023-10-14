@@ -23,6 +23,10 @@
             class="input-field !px-4"
             type="text"
             placeholder="Company name"
+            @blur="v$.company_name.$touch()"
+            :class="
+              v$.company_name.$dirty && v$.company_name.$invalid && 'error'
+            "
           />
         </div>
       </div>
@@ -42,6 +46,12 @@
             class="input-field !px-4"
             type="text"
             placeholder="registration number"
+            @blur="v$.company_reg_number.$touch()"
+            :class="
+              v$.company_reg_number.$dirty &&
+              v$.company_reg_number.$invalid &&
+              'error'
+            "
           />
         </div>
       </div>
@@ -65,6 +75,12 @@
             class="input-field !pl-12 pr-4"
             type="text"
             placeholder="enter your company Domicile address"
+            @blur="v$.company_address.$touch()"
+            :class="
+              v$.company_address.$dirty &&
+              v$.company_address.$invalid &&
+              'error'
+            "
           />
         </div>
       </div>
@@ -121,8 +137,9 @@
         <Button
           text="Save"
           type="submit"
+          :disabled="fieldHasError"
           :loading="isUpdatingKYC"
-          class="!w-auto !px-11 !bg-primary-500 !text-white"
+          class="!w-auto !px-11 !text-white"
         />
       </div>
     </form>
@@ -132,6 +149,8 @@
 <script setup lang="ts">
   import { useConstantsStore } from "~/store/constants"
   import { useAuthStore } from "~/store/authentication"
+  import { useVuelidate } from "@vuelidate/core"
+  import { required } from "@vuelidate/validators"
 
   const emit = defineEmits(["updated"])
 
@@ -155,8 +174,25 @@
   const allCountries: any = computed(() => useConstantsStore().countries)
   const authUser: any = computed(() => authenticatedUser)
 
+  const fieldHasError = computed(() => v$.value.$error)
+
+  const validationRules = computed(() => {
+    return {
+      company_name: { required },
+      company_reg_number: { required },
+      company_address: { required },
+      aml_appropriate_regulation: { required },
+      appropriate_prudential_supervision: { required },
+    }
+  })
+
+  const v$ = useVuelidate(validationRules, payload.value)
+
   // functions
   const updateKYCDetails = async () => {
+    v$.value.$touch()
+    if (fieldHasError.value) return
+
     isUpdatingKYC.value = true
     const response = await updateKYC(payload.value)
     const { data, error } = response
@@ -189,15 +225,18 @@
   onBeforeMount(() => populatePayload())
 </script>
 
-<style>
+<style scoped>
   .input-field {
-    @apply bg-transparent focus:bg-transparent focus:ring-primary-400 focus:ring-1 w-full flex-1 rounded leading-5 block text-sm py-3.5 outline-0 border-0;
+    @apply bg-transparent focus:bg-transparent  focus:ring-primary-400 focus:ring-1 w-full flex-1 rounded leading-5 block text-sm py-3.5 outline-0 border-0;
+  }
+  .input-field.error {
+    @apply ring-2 !ring-error-500;
   }
   .icon {
     @apply absolute top-0 h-full rounded-tl rounded-bl bg-transparent flex justify-center items-center px-[1.125rem];
   }
   .icon.icon-left {
-    @apply rounded-tl rounded-bl left-0 text-grey-500;
+    @apply rounded-tl rounded-bl left-0;
   }
   .icon.icon-right {
     @apply rounded-tr rounded-br right-0 cursor-pointer;

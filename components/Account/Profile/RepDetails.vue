@@ -27,6 +27,8 @@
             type="text"
             placeholder="First name"
             v-model.trim="payload.first_name"
+            @blur="v$.first_name.$touch()"
+            :class="v$.first_name.$dirty && v$.first_name.$invalid && 'error'"
           />
         </div>
       </div>
@@ -47,6 +49,8 @@
             type="text"
             placeholder="Last name"
             v-model.trim="payload.last_name"
+            @blur="v$.last_name.$touch()"
+            :class="v$.last_name.$dirty && v$.last_name.$invalid && 'error'"
           />
         </div>
       </div>
@@ -67,6 +71,8 @@
             type="text"
             placeholder="enter address"
             v-model="payload.address"
+            @blur="v$.address.$touch()"
+            :class="v$.address.$dirty && v$.address.$invalid && 'error'"
           />
         </div>
       </div>
@@ -191,6 +197,7 @@
         <Button
           text="Save"
           type="submit"
+          :disabled="fieldHasError"
           :loading="isUpdatingKYC"
           class="!w-auto !px-11"
         />
@@ -202,6 +209,8 @@
 <script setup lang="ts">
   import { useConstantsStore } from "~/store/constants"
   import { useAuthStore } from "~/store/authentication"
+  import { useVuelidate } from "@vuelidate/core"
+  import { required } from "@vuelidate/validators"
 
   const emit = defineEmits(["updated"])
 
@@ -232,6 +241,18 @@
   // computed
   const allCountries: any = computed(() => useConstantsStore().countries)
   const authUser: any = computed(() => authenticatedUser)
+  const fieldHasError = computed(() => v$.value.$error)
+  const validationRules = computed(() => {
+    return {
+      first_name: { required },
+      last_name: { required },
+      address: { required },
+      nationality: { required },
+      phone_number: { required },
+    }
+  })
+
+  const v$ = useVuelidate(validationRules, payload.value)
 
   // functions
   const getCountryCode = (selectedCountry: any) => {
@@ -240,6 +261,9 @@
   }
 
   const updateKYCDetails = async () => {
+    v$.value.$touch()
+    if (fieldHasError.value) return
+
     isUpdatingKYC.value = true
     const response = await updateKYC(payload.value)
     const { data, error } = response
@@ -287,15 +311,21 @@
   onBeforeMount(() => populatePayload())
 </script>
 
-<style>
+<style scoped>
   .input-field {
-    @apply bg-transparent focus:bg-transparent focus:ring-primary-400 focus:ring-1 w-full flex-1 rounded leading-5 block text-sm py-3.5 outline-0 border-0;
+    @apply bg-transparent focus:bg-transparent  focus:ring-primary-400 focus:ring-1 w-full flex-1 rounded leading-5 block text-sm py-3.5 outline-0 border-0;
+  }
+  .input-field.valid {
+    @apply ring-primary-400;
+  }
+  .input-field.error {
+    @apply ring-2 !ring-error-500;
   }
   .icon {
     @apply absolute top-0 h-full rounded-tl rounded-bl bg-transparent flex justify-center items-center px-[1.125rem];
   }
   .icon.icon-left {
-    @apply rounded-tl rounded-bl left-0 text-grey-500;
+    @apply rounded-tl rounded-bl left-0;
   }
   .icon.icon-right {
     @apply rounded-tr rounded-br right-0 cursor-pointer;

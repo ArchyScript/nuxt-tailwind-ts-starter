@@ -83,7 +83,7 @@
         <Button
           type="submit"
           text="Log in"
-          :disabled="isFieldValid"
+          :disabled="fieldHasError"
           :loading="loading"
         />
       </div>
@@ -129,7 +129,7 @@
 
   // computed
   const computedPreviousRoute = computed(() => previousRoute)
-  const isFieldValid = computed(() => v$.value.$error)
+  const fieldHasError = computed(() => v$.value.$error)
 
   // rules
   const validationRules = computed(() => {
@@ -160,7 +160,7 @@
   // functions
   const loginFinacier = async () => {
     v$.value.$touch()
-    if (!isFieldValid) return
+    if (fieldHasError.value) return
 
     loading.value = true
 

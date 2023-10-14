@@ -74,7 +74,7 @@
         <Button
           type="submit"
           text="Create account"
-          :disabled="isFieldValid"
+          :disabled="fieldHasError"
           :loading="loading"
         />
       </div>
@@ -118,26 +118,12 @@
   const loading: Ref<boolean> = ref(false)
   const payload: Ref<any> = ref({ email: "", password: "" })
 
-  const isFieldValid = computed(() => v$.value.$error)
-
-  //
-  const rules = computed(() => {
-    return {
-      email: { required, email },
-      password: {
-        required,
-        maxLength: maxLength(128),
-        minLength: minLength(4),
-      },
-      payback_days: { required },
-      interest_rate: { required },
-    }
-  })
+  const fieldHasError = computed(() => v$.value.$error)
 
   const validationRules = computed(() => {
     return {
       email: {
-        required: helpers.withMessage("E-mail is required", required),
+        required: helpers.withMessage("email is required", required),
         email: helpers.withMessage("Invalid email format", email),
       },
       password: {
@@ -161,7 +147,7 @@
   //
   const registerFinacier = async () => {
     v$.value.$touch()
-    if (!isFieldValid) return
+    if (fieldHasError.value) return
     loading.value = true
 
     const response = await register(payload.value)
