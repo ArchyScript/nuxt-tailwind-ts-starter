@@ -26,7 +26,7 @@ export const beforeFileUpload = ({ type, size }: any, fileType: string) => {
 
   // check if file size is a doc or pdf and more than 2mb
   if (fileType == "doc" || (fileType == "pdf" && fileSize / 1000 > 2))
-    return "This file exceeds the maximum size of 2MB"
+    return "This file exceeds the maximum size of 2MB."
 
   return null
 }
