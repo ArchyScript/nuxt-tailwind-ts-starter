@@ -82,14 +82,4 @@
   .box-shadow {
     box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.04);
   }
-
-  .modal-fade-enter-active,
-  .modal-fade-leave-active {
-    transition: opacity 3s;
-  }
-
-  .modal-fade-enter,
-  .modal-fade-leave-to {
-    opacity: 0;
-  }
 </style>

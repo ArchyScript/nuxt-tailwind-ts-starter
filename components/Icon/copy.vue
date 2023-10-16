@@ -27,7 +27,12 @@
       </g>
       <defs>
         <clipPath id="clip0_3093_64727">
-          <rect width="19.2" height="19.2" fill="white" transform="translate(0.398438 0.399902)" />
+          <rect
+            width="19.2"
+            height="19.2"
+            fill="white"
+            transform="translate(0.398438 0.399902)"
+          />
         </clipPath>
       </defs>
     </svg>
@@ -71,9 +76,9 @@
     },
     colorVariant: {
       type: String,
-      default: 'blue',
+      default: "blue",
     },
-  });
+  })
 </script>
 
 <style lang="scss" scoped></style>

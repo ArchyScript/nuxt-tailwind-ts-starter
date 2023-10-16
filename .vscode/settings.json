@@ -1,9 +1,30 @@
 {
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "files.autoSave": "off",
-  "nuxt.isNuxtApp": false,
-  "editor.formatOnSave": true,
-  "[vue]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
-  }
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "files.autoSave": "off",
+    "nuxt.isNuxtApp": false,
+    "editor.formatOnSave": true,
+    "[vue]": {
+        "editor.defaultFormatter": "esbenp.prettier-vscode"
+    },
+
+    "tailwindCSS.emmetCompletions": true,
+    "tailwindCSS.includeLanguages": {
+        "html": "html",
+        "javascript": "javascript"
+    },
+    "tailwindCSS.files.exclude": [
+        "**/.git/**",
+        "**/node_modules/**",
+        "**/.hg/**",
+        "**/.svn/**"
+    ],
+    "tailwindCSS.classAttributes": "class,className,ngClass",
+    "tailwindCSS.suggestions": true,
+    "tailwindCSS.hovers": true,
+    "tailwindCSS.codeActions": true,
+    "tailwindCSS.colorDecorators": true,
+    "tailwindCSS.validate": true,
+    "tailwindCSS.experimental.configFile": "/../tailwind.config.js",
+    "tailwindCSS.showPixelEquivalents": true,
+    "tailwindCSS.rootFontSize": 14
 }

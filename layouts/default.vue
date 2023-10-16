@@ -1,21 +1,9 @@
 <template>
-  <div class="min-h-screen flex flex-col flex-auto flex-shrink-0 no-scrollbar antialiased bg-ui-bg">
-    <!-- Sidebar -->
-    <div
-      class="fixed flex flex-col left-0 w-[17.5rem] p-4 bg-grey-700 h-full transition-all duration-300 border-none z-10"
-    >
-      <PartialsSidebar />
-    </div>
-
-    <!--  -->
-    <div class="ml-[17.5rem] flex flex-col !no-scrollbar min-h-screen">
-      <PartialsTopbar />
-
-      <div class="container flex-1 h-full mx-auto w-full !no-scrollbar mb-20 p-8">
-        <slot />
-      </div>
-
-      <PartialsAppFooter layout="default" />
+  <div
+    class="min-h-screen flex flex-col flex-auto flex-shrink-0 no-scrollbar antialiased bg-ui-bg"
+  >
+    <div>
+      <slot />
     </div>
 
     <!-- all general components here e.g toast -->
@@ -25,8 +13,8 @@
 </template>
 
 <script setup lang="ts">
-  import { useCustomStore } from '~/store/custom';
-  const isLoading = computed(() => useCustomStore().isLoading); 
+  import { useCustomStore } from "~/store/custom"
+  const isLoading = computed(() => useCustomStore().isLoading)
 </script>
 
 <style>

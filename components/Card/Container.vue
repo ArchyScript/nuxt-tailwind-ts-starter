@@ -20,11 +20,11 @@
   const props = defineProps({
     customClass: {
       type: String,
-      default: '',
+      default: "",
     },
     size: {
       type: String,
-      default: 'sm',
+      default: "sm",
     },
     hasBoxShadow: {
       type: Boolean,
@@ -36,13 +36,13 @@
     },
     routerLink: {
       type: String,
-      default: '/dashboards',
+      default: "/dashboards",
     },
-  });
+  })
 
   const gotoRoute = () => {
     if (props.isRouted) {
-      useRouter().push(props.routerLink);
+      useRouter().push(props.routerLink)
     }
-  };
+  }
 </script>

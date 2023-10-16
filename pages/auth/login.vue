@@ -1,106 +1,6 @@
 <template>
   <div class="bg-white rounded box-shadow space-y-8 p-8 w-[36.5rem] mx-auto">
-    <header class="space-y-2">
-      <h3
-        class="text-center leading-7 text-[1.75rem] font-semibold text-grey-600"
-      >
-        Welcome back
-      </h3>
-      <p class="text-center text-sm leading-[160%] text-grey-400 leading-6">
-        Fill up the form to Login to your Account.
-      </p>
-    </header>
-
-    <form @submit.prevent="loginFinacier" class="text-sm">
-      <div class="mb-4 space-y-2">
-        <label for="email" class="block mb-2 leading-6 text-grey-500">
-          Email Address
-        </label>
-
-        <div class="relative bg-input-bg rounded">
-          <span class="icon icon-left !text-grey-300">
-            <IconEmail />
-          </span>
-
-          <input
-            id="email"
-            v-model="payload.email"
-            @blur="v$.email.$touch()"
-            :class="v$.email.$dirty && (v$.email.$invalid ? 'error' : 'valid')"
-            class="input-field !pl-12 pr-4"
-            type="email"
-            placeholder="example@gmail.com"
-          />
-        </div>
-
-        <p class="text-red-500 text-xs">
-          {{ v$.email?.$errors[0]?.$message }}
-        </p>
-      </div>
-
-      <div class="mb-2 space-y-2">
-        <label for="password" class="block leading-6 text-grey-500">
-          Password
-        </label>
-
-        <div class="relative bg-input-bg rounded">
-          <span class="icon icon-left">
-            <IconLock />
-          </span>
-
-          <input
-            id="password"
-            class="input-field !px-12"
-            placeholder="password"
-            @blur="v$.password.$touch()"
-            :type="showPassword ? 'text' : 'password'"
-            v-model="payload.password"
-            :class="
-              v$.password.$dirty && (v$.password.$invalid ? 'error' : 'valid')
-            "
-          />
-
-          <span class="icon icon-right" @click="showPassword = !showPassword">
-            <IconEyes :title="showPassword ? 'open' : 'close'" />
-          </span>
-        </div>
-
-        <p class="text-red-500 text-xs">
-          {{ v$.password?.$errors[0]?.$message }}
-        </p>
-      </div>
-
-      <p class="flex justify-end p-2">
-        <nuxt-link
-          to="/auth/forgot-password"
-          class="text-primary-500 font-medium leading-6"
-        >
-          Forgot password
-        </nuxt-link>
-      </p>
-
-      <div class="block w-full pt-5 pb-6">
-        <Button
-          type="submit"
-          text="Log in"
-          :disabled="fieldHasError"
-          :loading="loading"
-        />
-      </div>
-
-      <div class="flex justify-center items-center space-x-2">
-        <span class="text-center text-grey-400 leading-6">
-          Don’t have an account?
-        </span>
-
-        <nuxt-link
-          to="/auth/register"
-          class="text-primary-500 font-medium leading-6 p-2 font-Poppins"
-        >
-          Create one
-        </nuxt-link>
-      </div>
-    </form>
+    <form @submit.prevent="loginFinacier" class="text-sm">Login</form>
   </div>
 </template>
 
@@ -115,20 +15,21 @@
     helpers,
   } from "@vuelidate/validators"
 
+  //
   definePageMeta({ layout: "auth" })
 
   const router = useRouter()
   const { $toast } = useNuxtApp()
   const { login } = useAuthApi()
-  const { setAuthUser, setAuthToken, logout, previousRoute } = useAuthStore()
 
-  // Reactive
   const showPassword: Ref<boolean> = ref(false)
   const loading: Ref<boolean> = ref(false)
-  const payload: Ref<any> = ref({ email: "", password: "" })
+  const payload: Ref<any> = ref({
+    email: "exmple@hgmail.com",
+    password: "Example.com",
+  })
 
   // computed
-  const computedPreviousRoute = computed(() => previousRoute)
   const fieldHasError = computed(() => v$.value.$error)
 
   // rules
@@ -163,36 +64,6 @@
     if (fieldHasError.value) return
 
     loading.value = true
-
-    const response = await login(payload.value)
-    const { data, error } = response
-
-    loading.value = false
-    if (error) return $toast("show", { type: "error", message: error.message })
-
-    $toast("show", { type: "success", message: `Login Successful` })
-
-    const { profile, kyc } = data
-
-    setAuthToken(profile.authToken)
-    setAuthUser(data)
-
-    // if the user have not completed their kyc
-    if (Object.keys(kyc).length < 1) return router.push("/auth/kyc")
-
-    // check if there is no previous route to redirect user to dashboard page
-    if (
-      !computedPreviousRoute.value ||
-      computedPreviousRoute.value == undefined
-    )
-      return router.push("/dashboards")
-
-    // check if session expired before login
-    if (computedPreviousRoute.value.includes("/auth/"))
-      return router.push("/dashboards")
-
-    //  if previous route does not include auth
-    return router.push(computedPreviousRoute.value)
   }
 </script>
 

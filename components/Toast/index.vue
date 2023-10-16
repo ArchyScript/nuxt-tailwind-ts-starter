@@ -4,46 +4,6 @@
     class="z-50 fixed top-2 right-2 w-80 p-4 rounded-sm"
     :class="`bg-${updatedTypeWithColorMatch}-50`"
   >
-    <!-- class="z-50 fixed top-0 -right-0.5 w-[35.375rem] py-4 px-6 rounded-l-md border-[1.5px]" -->
-    <!-- <div class="flex space-x-4 pr-16 relative">
-      <span class="p-0.5" :class="`!text-${updatedTypeWithColorMatch}-500`"> 
-        <IconCheckbox
-          v-if="updatedTypeWithColorMatch == 'success'"
-          :height="24"
-          :width="24"
-        />
- 
-        <span
-          v-else-if="updatedTypeWithColorMatch == 'error'"
-          class="w-6 h-6 bg-error-500 text-error-50 flex justify-center items-center rounded-full"
-        >
-          <IconClose :height="14" :width="14" />
-        </span>
-
-        <IconInfo :height="24" :width="24" v-else />
-      </span>
- 
-      <div class="space-y-0.5">
-        <h6
-          class="font-Poppins font-medium"
-          :class="`!text-${updatedTypeWithColorMatch}-500`"
-        >
-          Password Changed successfully
-        </h6>
-
-        <p class="text-sm font-Poppins text-grey-500 leading-[160%]">
-          You can now login to your account with your new password
-        </p>
-      </div>
-
-      <span
-        class="absolute text-grey-300 p-1 rounded-tr-md cursor-pointer top-0 right-0"
-        @click="close"
-      >
-        <IconClose :height="12" :width="12" />
-      </span>
-    </div> -->
-
     <p :class="`text-${updatedTypeWithColorMatch}-500 mt-2`">
       {{ message }}
     </p>
